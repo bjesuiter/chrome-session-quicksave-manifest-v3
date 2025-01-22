@@ -1,12 +1,17 @@
 {
-  "name": "solid-chrome-extension-template",
-  "displayName": "Solid Chrome Extension Template",
-  "version": "0.202501.1",
-  "description": "Chrome Extension boilerplate with SolidJS + Vite v6 + ManifestV3",
+  "name": "chrome-session-quicksave",
+  "displayName": "Session Quicksave",
+  "description": "A Chrome extension for quickly saving all open tabs inside a window into the browser bookmarks (with some configurability)",
+  "version": "0.3.0",
   "license": "MIT",
+  "type": "module",
   "repository": {
     "type": "git",
-    "url": "https://github.com/bjesuiter/solid-chrome-extension-template.git"
+    "url": "https://github.com/bjesuiter/chrome-session-quicksave-manifest-v3.git"
+  },
+  "author": {
+    "name": "Benjamin Jesuiter",
+    "email": "bjesuiter@gmail.com"
   },
   "scripts": {
     "dev": "vite build -w",
@@ -18,7 +23,6 @@
     "coverage": "vitest run --coverage",
     "prettier": "prettier --write ."
   },
-  "type": "module",
   "dependencies": {
     "solid-js": "^1.9.4"
   },
