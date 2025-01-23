@@ -1,61 +1,67 @@
-<div align="center">
-<img width="128" src="/src/assets/img/logo.svg" alt="logo"/>
-<h1> Chrome Extension Boilerplate with<br/>SolidJS 1.x + Vite v6 + TypeScript 5.x + Manifest V3 + Hot Relaod</h1>
+# Chrome Session Quicksave
 
-![](https://img.shields.io/badge/Typescript-3178C6?style=flat-square&logo=typescript&logoColor=white)
-![](https://badges.aleen42.com/src/vitejs.svg)
+A Chrome extension for quickly saving all open tabs inside a window into the browser bookmarks (with some configurability)
 
-<!-- ![GitHub action badge](https://github.com/fuyutarow/solid-chrome-extension-template/actions/workflows/build.yml/badge.svg) -->
+## How to deploy new version to chrome webstore
 
-<!-- > This project is listed in the [Awesome Vite](https://github.com/vitejs/awesome-vite) -->
+see https://developer.chrome.com/webstore/publish
 
-</div>
+## Icon Attributions
 
-## Update: Dependencies are current (as of 2025-01-23)
+This project uses Icons from this icon pack:  
+<https://www.flaticon.com/de/packs/mobile-interface-3>
 
-![green version check for dependencies in package.json](./readme_assets/image.png)
+<div>Icons by <a href="https://www.flaticon.com/de/autoren/smashicons" title="Smashicons">Smashicons</a> from <a href="https://www.flaticon.com/de/" title="Flaticon">www.flaticon.com</a></div>
 
-## Intro <a name="intro"></a>
+### Error Icon
 
-This boilerplate is made for creating chrome extensions using SolidJS and Typescript.
+Icon Pack:  
+<https://www.flaticon.com/de/kostenloses-icon/schliessen_1828665>
 
-> The focus was on improving the build speed and development experience with Vite.
+<div>Icons by <a href="https://www.flaticon.com/de/autoren/pixel-perfect" title="Pixel perfect">Pixel perfect</a> from <a href="https://www.flaticon.com/de/" title="Flaticon">www.flaticon.com</a></div>
 
-## Features <a name="features"></a>
+---
 
-- [SolidJS](https://www.solidjs.com/)
-- [TypeScript](https://www.typescriptlang.org/)
-- [Vite](https://vitejs.dev/)
-- [ESLint](https://eslint.org/)
-- [Prettier](https://prettier.io/)
-- [Chrome Extension Manifest Version 3](https://developer.chrome.com/docs/extensions/mv3/intro/)
-- [Tailwind-Motion Plugin (for slick animations!)](https://docs.rombo.co/tailwind)
-- [Tailwind Container Queries Plugin](https://github.com/tailwindlabs/tailwindcss-container-queries)
-- Hot Reload (Live reload)
+## Next Steps / Improvements for 1.0.0
 
-## Installation <a name="installation"></a>
+### General
 
-### Procedures <a name="procedures"></a>
+- add an options page for extension configuration, allow config of
+  - Default Behavior when one specific session folder does already exist (overwrite, create new, ask)
+- Add a component for visual selection of a parent bookmark folder for storing the session folders
 
-1. Clone this repository.
-2. Change `name` and `description` in package.json => **Auto synchronizes with manifest**
-3. Run `bun i` or `npm i` (check your node version >= 16)
-4. Run `bun dev` or `npm run dev`
-5. Load Extension on Chrome
-   1. Open - Chrome browser
-   2. Access - chrome://extensions
-   3. Check - Developer mode
-   4. Find - Load unpacked extension
-   5. Select - `dist` folder in this project (after dev or build)
-6. If you want to build in production, Just run `bun run build` or `npm run build`.
+### Migrating to Chrome Manifest V3
 
-## Screenshots <a name="screenshots"></a>
+- [Migration Guide](https://developer.chrome.com/docs/extensions/mv3/intro/mv3-migration/#action-api-unification)
+- [Migration Checklist](https://developer.chrome.com/docs/extensions/mv3/mv3-migration-checklist/)
 
-<img width="957" alt="image" src="https://user-images.githubusercontent.com/14998939/182227580-31e390cd-386b-426a-adba-e8a31a2f303d.png">
+## Ideas after 1.0.0
 
-## Documents <a name="documents"></a>
+- add a notification which allows jumping to the new session in the bookmark manager
+- allow configuration of the pattern for default 'New Session' names.
+- add more languages (default language is english)
+- add notification when extension was updated, with link to changelog
 
-- [Vite Plugin](https://vitejs.dev/guide/api-plugin.html)
-- [ChromeExtension](https://developer.chrome.com/docs/extensions/mv3/)
-- [Rollup](https://rollupjs.org/guide/en/)
-- [Rollup-plugin-chrome-extension](https://www.extend-chrome.dev/rollup-plugin)
+## Unspecified Todos
+
+- improve error html pages
+- Add website for extension
+
+---
+
+## Changelog
+
+### 0.3.0 (Beta) - 2020-11-13 - added basic options page & Session Folder initialization after install
+
+- use StencilJS as robust base for background script, toolbar icon click handler & options page
+- compile extension from typescript (which improves stability a lot!)
+
+### 0.2.0 (Beta) - 2020-04-18 - initial release improved
+
+- added more icons
+- improved readme and changelog
+- improved code comment quality
+
+### 0.1.0 (Beta) - 2020-04-18 - initial release
+
+- can save the urls from all tabs in the current window to a new folder under a folder called 'Sessions' somewhere in chrome bookmarks
