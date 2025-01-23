@@ -22,12 +22,12 @@ const manifest = defineManifest(async () => ({
   icons: {
     "128": "icons/icon-128.png",
   },
-  content_scripts: [
-    {
-      matches: ["http://*/*", "https://*/*", "<all_urls>"],
-      js: ["src/pages/content/index.tsx"],
-    },
-  ],
+  // content_scripts: [
+  //   {
+  //     matches: ["http://*/*", "https://*/*", "<all_urls>"],
+  //     js: ["src/pages/content/index.tsx"],
+  //   },
+  // ],
   web_accessible_resources: [
     {
       resources: ["assets/js/*.js", "assets/css/*.css", "assets/img/*"],
