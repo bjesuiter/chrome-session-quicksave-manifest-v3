@@ -1,7 +1,7 @@
 import { saveSession } from "@src/lib/chrome-services/bookmark-service";
 import {
+  badgeOkNotification,
   showError,
-  showSimpleNotification,
 } from "@src/lib/chrome-services/notification-service";
 import { readOptionSessionsFolderId } from "@src/lib/chrome-services/synced-storage-service";
 import { getTabsInWindow } from "@src/lib/chrome-services/tabs-service";
@@ -66,10 +66,11 @@ export function PopupPage() {
     // TODO: allow deleting the saved session directly (in case of an error)
     console.info(`Session "${sessionName()}" saved successfully`);
     closePopup();
-    await showSimpleNotification(
-      "Session Quicksave - Success",
-      `Saved new Session "${sessionName()}" successfully`,
-    );
+    badgeOkNotification();
+    // await showSimpleNotification(
+    //   "Session Quicksave - Success",
+    //   `Saved new Session "${sessionName()}" successfully`,
+    // );
   };
 
   return (
