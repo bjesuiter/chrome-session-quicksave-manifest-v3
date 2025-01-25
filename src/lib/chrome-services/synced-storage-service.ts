@@ -3,9 +3,9 @@ import { SessionQuicksaveOptions } from "@src/lib/models/session-quicksave-optio
 export async function saveOptions(
   options: SessionQuicksaveOptions,
 ): Promise<void> {
-  const jsonObject = JSON.stringify(options);
-  console.debug("Saving new options... : ", jsonObject);
-  await chrome.storage.sync.set(jsonObject);
+  console.debug("Saving new options... : ", options);
+  const syncItems = { options };
+  await chrome.storage.sync.set(syncItems);
 
   const error = chrome.runtime.lastError;
   if (error) {
@@ -15,14 +15,18 @@ export async function saveOptions(
   }
 }
 
-export async function readOptions(): Promise<SessionQuicksaveOptions> {
-  const items = await chrome.storage.sync.get();
+export async function readOptions(): Promise<
+  SessionQuicksaveOptions | undefined
+> {
+  const syncItems = await chrome.storage.sync.get(["options"]);
+
+  console.log(`chrome.storage.sync options: `, syncItems.options);
 
   if (chrome.runtime.lastError) {
     throw chrome.runtime.lastError;
   }
 
-  const optionsParsed = SessionQuicksaveOptions.safeParse(items);
+  const optionsParsed = SessionQuicksaveOptions.safeParse(syncItems.options);
   if (!optionsParsed.success) {
     throw optionsParsed.error;
   }

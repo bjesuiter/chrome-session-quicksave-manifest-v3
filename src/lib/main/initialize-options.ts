@@ -20,16 +20,23 @@ export const DEFAULT_SESSIONS_FOLDER_NAME = "Sessions";
  */
 export async function initializeOptions() {
   console.log("Initializing Option Storage for Session Quicksave Extension.");
-  console.log("Checking for already available options...");
+  console.log(
+    "Checking if options are already available in chrome.storage.sync ...",
+  );
 
   try {
     const options = await readOptions();
     if (options) {
-      console.log("Found options already: ", options);
+      console.log("Found options in chrome.storage.sync: ", options);
     }
-    console.log("Validating options.sessionsFolderId...");
+
+    console.log(
+      `Validating options.sessionsFolderId: ${options.sessionsFolderId}...`,
+    );
     if (isSessionFolderIdValid(options.sessionsFolderId)) {
-      console.log("Session Folder Id is valid.");
+      console.log("Session Folder Id is valid.", {
+        sessionsFolderId: options.sessionsFolderId,
+      });
       return;
     }
   } catch (error) {
