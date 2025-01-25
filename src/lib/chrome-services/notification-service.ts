@@ -3,15 +3,29 @@ async function basicNotification(
   message: string,
   iconUrl: string,
 ) {
-  return new Promise((resolve) => {
-    const notification = {
-      type: "basic",
-      iconUrl: iconUrl,
-      title,
-      message,
-    } satisfies chrome.notifications.NotificationOptions;
-    chrome.notifications.create(undefined, notification, resolve);
-  });
+  const notification = {
+    type: "basic",
+    iconUrl: iconUrl,
+    title,
+    message,
+  } satisfies chrome.notifications.NotificationOptions;
+
+  const notificationId = (await chrome.notifications.create(
+    undefined,
+    notification,
+  )) as unknown as string;
+
+  if (chrome.runtime.lastError) {
+    console.error(
+      "Error creating notification",
+      chrome.runtime.lastError.message,
+    );
+    throw new Error(
+      "Error creating notification" + chrome.runtime.lastError.message,
+    );
+  }
+
+  return notificationId;
 }
 
 /**
@@ -19,7 +33,10 @@ async function basicNotification(
  * @param {*} text
  * @returns {Promise<string>} resolves with the id of the notification
  */
-export async function showSimpleNotification(title: string, message: string) {
+export async function showSimpleNotification(
+  title: string,
+  message: string,
+): Promise<string> {
   return basicNotification(
     title,
     message,
