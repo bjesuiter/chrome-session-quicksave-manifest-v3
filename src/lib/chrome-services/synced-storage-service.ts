@@ -1,38 +1,34 @@
 import { SessionQuicksaveOptions } from "@src/lib/models/session-quicksave-options";
 
-export function saveOptions(options: SessionQuicksaveOptions): Promise<void> {
-	return new Promise((resolve, reject) => {
-		const jsonObject = JSON.stringify(options);
-		console.debug("Saving new options... : ", jsonObject);
-		chrome.storage.sync.set(jsonObject, () => {
-			const error = chrome.runtime.lastError;
-			if (error) {
-				console.debug("Error saving options: ", error);
-				reject(error);
-			} else {
-				console.debug("New options saved successfully");
-				resolve();
-			}
-		});
-	});
+export async function saveOptions(
+	options: SessionQuicksaveOptions,
+): Promise<void> {
+	const jsonObject = JSON.stringify(options);
+	console.debug("Saving new options... : ", jsonObject);
+	await chrome.storage.sync.set(jsonObject);
+
+	const error = chrome.runtime.lastError;
+	if (error) {
+		console.debug("Error saving options: ", error);
+	} else {
+		console.debug("New options saved successfully");
+	}
 }
 
-export function readOptions(): Promise<SessionQuicksaveOptions> {
-	return new Promise((resolve, reject) => {
-		chrome.storage.sync.get((items) => {
-			if (chrome.runtime.lastError) {
-				reject(chrome.runtime.lastError);
-				return;
-			}
-			const optionsParsed = SessionQuicksaveOptions.safeParse(items);
-			if (!optionsParsed.success) {
-				reject(optionsParsed.error);
-				return;
-			}
-			const decodedOptions = optionsParsed.data;
-			resolve(decodedOptions);
-		});
-	});
+export async function readOptions(): Promise<SessionQuicksaveOptions> {
+	const items = await chrome.storage.sync.get();
+
+	if (chrome.runtime.lastError) {
+		throw chrome.runtime.lastError;
+	}
+
+	const optionsParsed = SessionQuicksaveOptions.safeParse(items);
+	if (!optionsParsed.success) {
+		throw optionsParsed.error;
+	}
+
+	const decodedOptions = optionsParsed.data;
+	return decodedOptions;
 }
 
 export async function readOptionSessionsFolderId(): Promise<
