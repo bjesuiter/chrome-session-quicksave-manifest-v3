@@ -17,6 +17,6 @@ Since it is in your bookmarks, the folder will be synced to all your chrome inst
 
 Beta limitations:
 
--   Target folder for sessions is hardcoded to Bookmark Bar / Sessions
--   Target Bookmark Folder needs to exist, otherwise the extension will not work.
--   No extension option page available yet for configuration
+- Target folder for sessions is hardcoded to Bookmark Bar / Sessions
+- Target Bookmark Folder needs to exist, otherwise the extension will not work.
+- No extension option page available yet for configuration

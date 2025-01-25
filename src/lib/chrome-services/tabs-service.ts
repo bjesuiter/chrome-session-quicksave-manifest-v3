@@ -5,11 +5,13 @@
  * TODO: Check how to deal with Tabs sleeping from 'The Great Suspender' Extension
  * @returns {Promise<Array<chrome.tabs.Tab>>}
  */
-export async function getTabsInWindow(windowId: number): Promise<Array<chrome.tabs.Tab>> {
-	return new Promise(resolve => {
-		const queryInfo: chrome.tabs.QueryInfo = {
-			windowId
-		};
-		chrome.tabs.query(queryInfo, resolve);
-	});
+export async function getTabsInWindow(
+  windowId: number,
+): Promise<Array<chrome.tabs.Tab>> {
+  return new Promise((resolve) => {
+    const queryInfo: chrome.tabs.QueryInfo = {
+      windowId,
+    };
+    chrome.tabs.query(queryInfo, resolve);
+  });
 }

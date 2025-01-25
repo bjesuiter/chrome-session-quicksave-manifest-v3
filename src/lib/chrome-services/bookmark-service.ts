@@ -15,11 +15,11 @@ export const BOOKMARK_BAR_FOLDER_ID = "1";
  * 																 for all specified bookmarkIds (regardless of hierarchy)
  */
 export function getBookmarkNodes(
-	...bookmarkIds: string[]
+  ...bookmarkIds: string[]
 ): Promise<Array<chrome.bookmarks.BookmarkTreeNode>> {
-	return new Promise((resolve) => {
-		chrome.bookmarks.get(bookmarkIds, resolve);
-	});
+  return new Promise((resolve) => {
+    chrome.bookmarks.get(bookmarkIds, resolve);
+  });
 }
 
 /**
@@ -28,10 +28,10 @@ export function getBookmarkNodes(
  * @returns {Promise<chrome.bookmarks.BookmarkTreeNode>} Promise which resolves to a single bookmark node
  */
 export async function getBookmarkNode(
-	bookmarkId: string,
+  bookmarkId: string,
 ): Promise<chrome.bookmarks.BookmarkTreeNode | undefined> {
-	const [node] = await getBookmarkNodes(bookmarkId);
-	return node;
+  const [node] = await getBookmarkNodes(bookmarkId);
+  return node;
 }
 
 /**
@@ -39,7 +39,7 @@ export async function getBookmarkNode(
  * @returns {Promise<chrome.bookmarks.BookmarkTreeNode>}
  */
 export function getBookmarkRoot(): Promise<chrome.bookmarks.BookmarkTreeNode> {
-	return getBookmarkNode("0");
+  return getBookmarkNode("0");
 }
 
 /**
@@ -48,11 +48,11 @@ export function getBookmarkRoot(): Promise<chrome.bookmarks.BookmarkTreeNode> {
  * @returns {Promise<Array<chrome.bookmarks.BookmarkTreeNode>>} A Promise which resolves to an array of child nodes from the specified parentId
  */
 export function getBookmarkChildren(
-	parentId: any,
+  parentId: any,
 ): Promise<Array<chrome.bookmarks.BookmarkTreeNode>> {
-	return new Promise((resolve) => {
-		chrome.bookmarks.getChildren(parentId, resolve);
-	});
+  return new Promise((resolve) => {
+    chrome.bookmarks.getChildren(parentId, resolve);
+  });
 }
 
 /**
@@ -61,11 +61,11 @@ export function getBookmarkChildren(
  * @returns {Promise<Array<chrome.bookmarks.BookmarkTreeNode>>}resolves to array of all available bookmark nodes
  */
 export function getBookmarkTreeComplete(): Promise<
-	Array<chrome.bookmarks.BookmarkTreeNode>
+  Array<chrome.bookmarks.BookmarkTreeNode>
 > {
-	return new Promise((resolve) => {
-		chrome.bookmarks.getTree(resolve);
-	});
+  return new Promise((resolve) => {
+    chrome.bookmarks.getTree(resolve);
+  });
 }
 
 /**
@@ -75,16 +75,16 @@ export function getBookmarkTreeComplete(): Promise<
  * @returns {Promise<Array<chrome.bookmarks.BookmarkTreeNode>>} array of bookmark nodes for result folders
  */
 export function searchBookmarkFolders(
-	folderName: string,
+  folderName: string,
 ): Promise<Array<chrome.bookmarks.BookmarkTreeNode>> {
-	return new Promise((resolve) => {
-		const searchQuery: chrome.bookmarks.BookmarkSearchQuery = {
-			url: undefined,
-			title: folderName,
-		};
+  return new Promise((resolve) => {
+    const searchQuery: chrome.bookmarks.BookmarkSearchQuery = {
+      url: undefined,
+      title: folderName,
+    };
 
-		chrome.bookmarks.search(searchQuery, resolve);
-	});
+    chrome.bookmarks.search(searchQuery, resolve);
+  });
 }
 
 /**
@@ -94,11 +94,11 @@ export function searchBookmarkFolders(
  * @returns {Promise<boolean>} true, when bookmark folder exists
  */
 export async function bookmarkFolderExists(
-	parentId: string,
-	folderName: string,
+  parentId: string,
+  folderName: string,
 ): Promise<boolean> {
-	const result = await getBookmarkFolderByName(parentId, folderName);
-	return !!result;
+  const result = await getBookmarkFolderByName(parentId, folderName);
+  return !!result;
 }
 
 /**
@@ -107,12 +107,12 @@ export async function bookmarkFolderExists(
  * @param folderName
  */
 export async function getBookmarkFolderByName(
-	parentId: string,
-	folderName: string,
+  parentId: string,
+  folderName: string,
 ): Promise<chrome.bookmarks.BookmarkTreeNode | undefined> {
-	const children = await getBookmarkChildren(parentId);
-	const result = children.find((childNode) => childNode.title === folderName);
-	return result;
+  const children = await getBookmarkChildren(parentId);
+  const result = children.find((childNode) => childNode.title === folderName);
+  return result;
 }
 
 /**
@@ -122,15 +122,15 @@ export async function getBookmarkFolderByName(
  * @returns {Promise<chrome.bookmarks.BookmarkTreeNode>}
  */
 export function createBookmarkFolder(
-	parentId: string,
-	folderName: string,
+  parentId: string,
+  folderName: string,
 ): Promise<chrome.bookmarks.BookmarkTreeNode> {
-	return new Promise((resolve) => {
-		chrome.bookmarks.create(
-			{ parentId, title: folderName, url: undefined },
-			resolve,
-		);
-	});
+  return new Promise((resolve) => {
+    chrome.bookmarks.create(
+      { parentId, title: folderName, url: undefined },
+      resolve,
+    );
+  });
 }
 
 /**
@@ -141,13 +141,13 @@ export function createBookmarkFolder(
  * @returns {Promise<chrome.bookmarks.BookmarkTreeNode>}
  */
 export async function createBookmark(
-	parentId: string,
-	url: string,
-	title: string,
+  parentId: string,
+  url: string,
+  title: string,
 ): Promise<chrome.bookmarks.BookmarkTreeNode> {
-	return new Promise((resolve) => {
-		chrome.bookmarks.create({ parentId, title, url }, resolve);
-	});
+  return new Promise((resolve) => {
+    chrome.bookmarks.create({ parentId, title, url }, resolve);
+  });
 }
 
 /**
@@ -155,26 +155,25 @@ export async function createBookmark(
  * @param {Promise<Array<chrome.tabs.Tab>>} tabs
  */
 export async function createBookmarksForTabs(
-	parentId: string,
-	tabs: Array<chrome.tabs.Tab>,
+  parentId: string,
+  tabs: Array<chrome.tabs.Tab>,
 ) {
-	const bookmarkPromises = tabs.map((tab) => {
-		const bookmarkUrl = tab.url ||
-			chrome.runtime.getURL(
-				"../assets/html/error-illegal-or-missing-url.html",
-			);
-		let bookmarkTitle = tab.title || "Tab without title";
-		if (tab.url === undefined) {
-			bookmarkTitle = `No Url: ${bookmarkTitle}`;
-		}
-		return createBookmark(parentId, bookmarkUrl, bookmarkTitle);
-	});
-	return Promise.all(bookmarkPromises);
+  const bookmarkPromises = tabs.map((tab) => {
+    const bookmarkUrl =
+      tab.url ||
+      chrome.runtime.getURL("../assets/html/error-illegal-or-missing-url.html");
+    let bookmarkTitle = tab.title || "Tab without title";
+    if (tab.url === undefined) {
+      bookmarkTitle = `No Url: ${bookmarkTitle}`;
+    }
+    return createBookmark(parentId, bookmarkUrl, bookmarkTitle);
+  });
+  return Promise.all(bookmarkPromises);
 }
 
 export interface SaveSessionOptions {
-	// mode can be: overwrite, alwaysNew (creates new folder with same name regardless of existing), ask
-	mode: "overwrite" | "alwaysNew" | "ask";
+  // mode can be: overwrite, alwaysNew (creates new folder with same name regardless of existing), ask
+  mode: "overwrite" | "alwaysNew" | "ask";
 }
 
 /**
@@ -185,33 +184,33 @@ export interface SaveSessionOptions {
  * @param {SaveSessionOptions} options
  */
 export async function saveSession(
-	parentId: string,
-	sessionName: string,
-	tabs: Array<chrome.tabs.Tab>,
-	options?: SaveSessionOptions,
+  parentId: string,
+  sessionName: string,
+  tabs: Array<chrome.tabs.Tab>,
+  options?: SaveSessionOptions,
 ) {
-	const optionDefaults: SaveSessionOptions = { mode: "alwaysNew" };
-	options = { ...optionDefaults, ...options };
-	const { mode } = options;
+  const optionDefaults: SaveSessionOptions = { mode: "alwaysNew" };
+  options = { ...optionDefaults, ...options };
+  const { mode } = options;
 
-	// check if new session does already exist
-	const sessionsFolderExists = await bookmarkFolderExists(
-		parentId,
-		sessionName,
-	);
-	if (sessionsFolderExists && mode === "overwrite") {
-		console.log("Overwrite existing session folder");
-		// TODO: delete existing session folder
-	} else if (sessionsFolderExists && mode === "alwaysNew") {
-		// do nothing, simply create sessionFolder and child bookmarks as is
-	} else if (sessionsFolderExists && mode === "ask") {
-		// TODO: ask the user what to do
-	}
+  // check if new session does already exist
+  const sessionsFolderExists = await bookmarkFolderExists(
+    parentId,
+    sessionName,
+  );
+  if (sessionsFolderExists && mode === "overwrite") {
+    console.log("Overwrite existing session folder");
+    // TODO: delete existing session folder
+  } else if (sessionsFolderExists && mode === "alwaysNew") {
+    // do nothing, simply create sessionFolder and child bookmarks as is
+  } else if (sessionsFolderExists && mode === "ask") {
+    // TODO: ask the user what to do
+  }
 
-	// create new Folder for session
-	const sessionFolder = await createBookmarkFolder(parentId, sessionName);
+  // create new Folder for session
+  const sessionFolder = await createBookmarkFolder(parentId, sessionName);
 
-	await createBookmarksForTabs(sessionFolder.id, tabs);
+  await createBookmarksForTabs(sessionFolder.id, tabs);
 
-	return sessionFolder;
+  return sessionFolder;
 }
