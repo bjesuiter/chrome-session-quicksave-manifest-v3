@@ -15,12 +15,25 @@ const manifest = defineManifest(async () => ({
   description: packageJson.description,
   options_page: "src/pages/options/index.html",
   background: { service_worker: "src/pages/background/index.ts" },
-  // action: {
-  // default_popup: "src/pages/popup/index.html",
-  // default_icon: "icons/icon-48.png",
-  // },
+  action: {
+    // default_icon: {
+    //   "16": "icons/icon-16.png",
+    //   "48": "icons/icon-48.png",
+    //   "128": "icons/icon-128.png",
+    // },
+    default_title: "Save current session",
+    // default_popup: "src/pages/popup/index.html",
+    // default_icon: "icons/icon-48.png",
+  },
   icons: {
+    "16": "icons/icon-16.png",
+    "32": "icons/icon-32.png",
+    "48": "icons/icon-48.png",
+    "56": "icons/icon-56.png",
+    "64": "icons/icon-64.png",
     "128": "icons/icon-128.png",
+    "256": "icons/icon-256.png",
+    "512": "icons/icon-512.png",
   },
   // content_scripts: [
   //   {
