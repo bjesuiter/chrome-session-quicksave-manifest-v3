@@ -1,5 +1,8 @@
 import { saveSession } from "@src/lib/chrome-services/bookmark-service";
-import { showSimpleNotification } from "@src/lib/chrome-services/notification-service";
+import {
+  showError,
+  showSimpleNotification,
+} from "@src/lib/chrome-services/notification-service";
 import { readOptionSessionsFolderId } from "@src/lib/chrome-services/synced-storage-service";
 import { getTabsInWindow } from "@src/lib/chrome-services/tabs-service";
 import "@src/styles/tailwind.css";
@@ -47,7 +50,19 @@ export function PopupPage() {
     // replace with target folder selection via plugin later
     const sessionFolderId = await readOptionSessionsFolderId();
     const tabs: chrome.tabs.Tab[] = await getTabsInWindow(currentWindow.id);
-    await saveSession(sessionFolderId, sessionName(), tabs);
+
+    try {
+      await saveSession(sessionFolderId, sessionName(), tabs);
+      console.info(`Session "${sessionName()}" saved successfully`);
+      closePopup();
+    } catch (e) {
+      console.error("Error saving session", e);
+      await showError(
+        "Session Quicksave - Error",
+        `Error saving new Session "${sessionName()}". Please try again.`,
+      );
+      return;
+    }
 
     // Todo: show notification which allows jumping to the new session folder in bookmark manager view
     // TODO: allow deleting the saved session directly (in case of an error)
