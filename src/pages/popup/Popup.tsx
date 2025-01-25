@@ -22,7 +22,7 @@ export function PopupPage() {
 
     // check custom validity first (to be able to undo it before checking for input.checkValidity())
     if (trimmedValue.length === 0) {
-      input.setCustomValidity("You've got whitespace only!");
+      input.setCustomValidity("Nothing more than whitespace?!");
       setIsInputError(true);
       return;
     } else {
