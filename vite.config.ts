@@ -29,6 +29,7 @@ export default defineConfig({
   build: {
     outDir,
     sourcemap: isDev,
+    minify: !isDev,
     rollupOptions: {
       // input: {
       //   devtools: resolve(pagesDir, "devtools", "index.html"),
