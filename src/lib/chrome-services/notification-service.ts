@@ -23,7 +23,7 @@ export async function showSimpleNotification(title: string, message: string) {
 	return basicNotification(
 		title,
 		message,
-		chrome.extension.getURL("assets/img/icon-512.png"),
+		chrome.runtime.getURL("icons/icon-512.png"),
 	);
 }
 
@@ -31,6 +31,6 @@ export async function showError(title: string, message: string) {
 	return basicNotification(
 		title,
 		message,
-		chrome.extension.getURL("assets/icons/error.png"),
+		chrome.runtime.getURL("assets/img/error.png"),
 	);
 }

@@ -160,8 +160,8 @@ export async function createBookmarksForTabs(
 ) {
 	const bookmarkPromises = tabs.map((tab) => {
 		const bookmarkUrl = tab.url ||
-			chrome.extension.getURL(
-				"../assets/error-htmls/illegal-or-missing-url.html",
+			chrome.runtime.getURL(
+				"../assets/html/error-illegal-or-missing-url.html",
 			);
 		let bookmarkTitle = tab.title || "Tab without title";
 		if (tab.url === undefined) {
