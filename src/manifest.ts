@@ -15,10 +15,10 @@ const manifest = defineManifest(async () => ({
   description: packageJson.description,
   options_page: "src/pages/options/index.html",
   background: { service_worker: "src/pages/background/index.ts" },
-  action: {
-    default_popup: "src/pages/popup/index.html",
-    default_icon: "icons/icon-48.png",
-  },
+  // action: {
+  // default_popup: "src/pages/popup/index.html",
+  // default_icon: "icons/icon-48.png",
+  // },
   icons: {
     "128": "icons/icon-128.png",
   },
@@ -39,6 +39,11 @@ const manifest = defineManifest(async () => ({
       matches: ["*://*/*"],
     },
   ],
+  permissions: ["bookmarks", "notifications", "storage", "tabs"],
+  content_security_policy: {
+    // default csp: script-src 'self'; object-src 'self';
+    // extension_pages: "script-src 'self' 'unsafe-eval'; object-src 'self'",
+  },
 }));
 
 export default manifest;
