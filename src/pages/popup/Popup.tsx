@@ -53,8 +53,6 @@ export function PopupPage() {
 
     try {
       await saveSession(sessionFolderId, sessionName(), tabs);
-      console.info(`Session "${sessionName()}" saved successfully`);
-      closePopup();
     } catch (e) {
       console.error("Error saving session", e);
       await showError(
@@ -66,6 +64,8 @@ export function PopupPage() {
 
     // Todo: show notification which allows jumping to the new session folder in bookmark manager view
     // TODO: allow deleting the saved session directly (in case of an error)
+    console.info(`Session "${sessionName()}" saved successfully`);
+    closePopup();
     await showSimpleNotification(
       "Session Quicksave - Success",
       `Saved new Session "${sessionName()}" successfully`,
