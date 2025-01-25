@@ -14,7 +14,7 @@
     "email": "bjesuiter@gmail.com"
   },
   "scripts": {
-    "dev": "vite build -w",
+    "dev": "vite build -w --mode development",
     "build": "vite build",
     "lint": "eslint --fix",
     "dev:nodemon": "nodemon",
