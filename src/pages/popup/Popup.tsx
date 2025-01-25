@@ -1,10 +1,9 @@
 import { saveSession } from "@src/lib/chrome-services/bookmark-service";
-import { showError } from "@src/lib/chrome-services/notification-service";
 import { readOptionSessionsFolderId } from "@src/lib/chrome-services/synced-storage-service";
 import { getTabsInWindow } from "@src/lib/chrome-services/tabs-service";
 import "@src/styles/tailwind.css";
 import { format } from "date-fns";
-import { createSignal } from "solid-js";
+import { createSignal, Show } from "solid-js";
 
 export function PopupPage() {
   const [sessionName, setSessionName] = createSignal(
@@ -39,6 +38,10 @@ export function PopupPage() {
     }
   };
 
+  const [saveError, setSaveError] = createSignal<
+    undefined | { title: string; message: string }
+  >();
+
   const quicksaveSession = async (e) => {
     e.preventDefault();
 
@@ -51,17 +54,30 @@ export function PopupPage() {
     try {
       await saveSession(sessionFolderId, sessionName(), tabs);
     } catch (e) {
-      console.error("Error saving session", e);
-      await showError(
-        "Session Quicksave - Error",
-        `Error saving new Session "${sessionName()}". Please try again.`,
-      );
+      console.error(`Error saving new Session "${sessionName()}"`, e);
+      await chrome.runtime.sendMessage({
+        type: "command",
+        command: "showErrBadge",
+      });
+      setSaveError({
+        title: "Session Quicksave - Error",
+        message: `Error saving new Session "${sessionName()}". Please try again.`,
+      });
       return;
     }
 
-    chrome.runtime.sendMessage({ type: "command", command: "showOkBadge" });
+    await chrome.runtime.sendMessage({
+      type: "command",
+      command: "showOkBadge",
+    });
     closePopup();
   };
+
+  // Test Error
+  // setSaveError({
+  //   title: "Session Quicksave - Error",
+  //   message: `Error saving new Session "Test 2025-01-25". Please try again.`,
+  // });
 
   return (
     <form
@@ -104,6 +120,13 @@ export function PopupPage() {
           Save
         </button>
       </div>
+
+      <Show when={saveError()}>
+        <div class="mt-4 rounded bg-red-600 p-2 text-white">
+          <h3 class="text-lg font-semibold">{saveError().title}</h3>
+          <p class="text-sm">{saveError().message}</p>
+        </div>
+      </Show>
     </form>
   );
 }
