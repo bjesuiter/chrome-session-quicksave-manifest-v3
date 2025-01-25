@@ -82,7 +82,7 @@ export function PopupPage() {
   return (
     <form
       onSubmit={quicksaveSession}
-      class="flex h-fit w-[300px] flex-col gap-2 bg-slate-800 px-4 py-10 text-white"
+      class="flex h-fit w-[300px] flex-col gap-2 bg-slate-800 px-4 pb-10 pt-4 text-white"
     >
       <label for="sessionNameInput" class="pl-1 text-lg font-semibold">
         Please name your session
