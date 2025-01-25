@@ -4,6 +4,7 @@
     "": {
       "name": "solid-chrome-extension-template",
       "dependencies": {
+        "serializr": "^3.0.3",
         "solid-js": "^1.9.4",
       },
       "devDependencies": {
@@ -946,6 +947,8 @@
     "saxes": ["saxes@6.0.0", "", { "dependencies": { "xmlchars": "^2.2.0" } }, "sha512-xAg7SOnEhrm5zI3puOOKyy1OMcMlIJZYNJY7xLBwSze0UjhPLnWfj2GF2EpT0jmzaJKIWKHLsaSSajf35bcYnA=="],
 
     "semver": ["semver@6.3.1", "", { "bin": { "semver": "bin/semver.js" } }, "sha512-BR7VvDCVHO+q2xBEWskxS6DJE1qRnb7DxzUrogb71CWoSficBxYsiAGd+Kl0mmq/MprG9yArRkyrQxTO6XjMzA=="],
+
+    "serializr": ["serializr@3.0.3", "", {}, "sha512-Be5bpqNfLqD107XksBHCeCtupZdqBRutAH++YJod2EL1Zqti/rEdEYtxKpGwUzuw5DOBrfqHrFrgM96xU2Oc7Q=="],
 
     "seroval": ["seroval@1.2.0", "", {}, "sha512-GURoU99ko2UiAgUC3qDCk59Jb3Ss4Po8VIMGkG8j5PFo2Q7y0YSMP8QG9NuL/fJCoTz9V1XZUbpNIMXPOfaGpA=="],
 
