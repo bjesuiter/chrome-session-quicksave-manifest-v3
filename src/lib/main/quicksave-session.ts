@@ -9,7 +9,8 @@ import { format } from "date-fns";
  * @param currentTab
  */
 export async function quicksaveSession(
-	currentTab: chrome.tabs.Tab,
+	sessionName: string,
+	currentWindowId: number,
 ): Promise<void> {
 	const currentWindowId: number = currentTab.windowId;
 
