@@ -47,12 +47,11 @@ export function getBookmarkRoot(): Promise<chrome.bookmarks.BookmarkTreeNode> {
  * @param {*} parentId
  * @returns {Promise<Array<chrome.bookmarks.BookmarkTreeNode>>} A Promise which resolves to an array of child nodes from the specified parentId
  */
-export function getBookmarkChildren(
-  parentId: any,
+export async function getBookmarkChildren(
+  parentId: string,
 ): Promise<Array<chrome.bookmarks.BookmarkTreeNode>> {
-  return new Promise((resolve) => {
-    chrome.bookmarks.getChildren(parentId, resolve);
-  });
+  const children = await chrome.bookmarks.getChildren(parentId);
+  return children;
 }
 
 /**
