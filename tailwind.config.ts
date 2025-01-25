@@ -9,6 +9,9 @@ export default {
       animation: {
         "logo-spin": "spin 20s linear infinite",
       },
+      colors: {
+        primary: "",
+      },
     },
   },
 
