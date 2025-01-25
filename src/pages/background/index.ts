@@ -15,3 +15,20 @@ chrome.runtime.onInstalled.addListener(async function () {
         console.error(errorMessage, error);
     }
 });
+
+chrome.action.onClicked.addListener(
+    /**
+     * @param currentTab see https://developer.chrome.com/extensions/tabs#type-Tab
+     */
+    async (currentTab) => {
+        // try {
+        //     await quicksaveSession(currentTab);
+        // } catch (error) {
+        //     await showError(
+        //         "Session Quicksave - Error",
+        //         `The session could not be saved.`,
+        //     );
+        //     console.error(error);
+        // }
+    },
+);

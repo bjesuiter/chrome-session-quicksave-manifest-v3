@@ -16,14 +16,9 @@ const manifest = defineManifest(async () => ({
   options_page: "src/pages/options/index.html",
   background: { service_worker: "src/pages/background/index.ts" },
   action: {
-    // default_icon: {
-    //   "16": "icons/icon-16.png",
-    //   "48": "icons/icon-48.png",
-    //   "128": "icons/icon-128.png",
-    // },
     default_title: "Save current session",
-    // default_popup: "src/pages/popup/index.html",
-    // default_icon: "icons/icon-48.png",
+    default_popup: "src/pages/popup/index.html",
+    default_icon: "icons/icon-48.png",
   },
   icons: {
     "16": "icons/icon-16.png",
