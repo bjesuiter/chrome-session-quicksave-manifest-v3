@@ -1,13 +1,13 @@
-import { getMessages } from "@src/lib/main/messages-service";
+import { userMessages } from "@src/lib/main/messages-service";
 import { For, Show } from "solid-js";
 
 export function UserMessages() {
   return (
-    <Show when={getMessages().length > 0}>
+    <Show when={userMessages.length > 0}>
       {/* Messages Area */}
       <div class="flex-col items-stretch bg-slate-100 p-2">
         {/* Each Message */}
-        <For each={getMessages()}>
+        <For each={userMessages}>
           {({ type, title, message }) => (
             <div class="flex items-center space-x-2">
               <div

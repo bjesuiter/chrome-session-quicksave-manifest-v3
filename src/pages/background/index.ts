@@ -3,6 +3,12 @@ import {
   setOkBadge,
 } from "@src/lib/chrome-services/badge-service";
 import { showError } from "@src/lib/chrome-services/notification-service";
+import {
+  showErrorMessage,
+  showInfoMessage,
+  showSuccessMessage,
+  showWarningMessage,
+} from "@src/lib/main/messages-service";
 import { optionsStore } from "@src/lib/main/options-service";
 import { isSessionFolderValid } from "@src/lib/utils/is-session-folder-valid";
 import { createEffect } from "solid-js";
@@ -11,6 +17,12 @@ console.log("background service worker loaded");
 
 // Code to run when extension gets installed
 chrome.runtime.onInstalled.addListener(async function () {
+  // Example Messages & Debugging
+  showSuccessMessage("Success", "Welcome");
+  showInfoMessage("Info", "Welcome");
+  showWarningMessage("Warning", "Welcome");
+  showErrorMessage("Error", "Welcome");
+
   try {
     // await initializeOptions();
     console.log("Extension Installed Successfully!");

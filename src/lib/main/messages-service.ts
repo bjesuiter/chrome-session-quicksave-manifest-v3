@@ -17,11 +17,7 @@ type Message = {
   message: string;
 };
 
-const [userMessages, setUserMessages] = createStore<Message[]>([]);
-
-export function getMessages() {
-  return userMessages;
-}
+export const [userMessages, setUserMessages] = createStore<Message[]>([]);
 
 export function clearMessages() {
   setUserMessages([]);
@@ -48,7 +44,8 @@ export function showSuccessMessage(message: string, title?: string) {
 }
 
 export const mostSevereMessageType = createMemo(() => {
-  const messages = getMessages();
+  // eslint-disable-next-line solid/reactivity
+  const messages = userMessages;
 
   if (messages.length === 0) {
     return undefined;
@@ -77,28 +74,22 @@ createEffect(() => {
   switch (type) {
     case "error":
       // show error badge
-      setErrBadge();
+      setErrBadge(0);
       break;
     case "warning":
       // show warning badge
-      setWarningBadge();
+      setWarningBadge(0);
       break;
     case "info":
       // show info badge
-      setInfoBadge();
+      setInfoBadge(0);
       break;
     case "success":
       // show success badge
-      setOkBadge();
+      setOkBadge(0);
       break;
     default:
       // hide badge
       break;
   }
 });
-
-// Example Messages & Debugging
-// showInfoMessage("Info", "Welcome");
-// showWarningMessage("Warning", "Welcome");
-// showErrorMessage("Error", "Welcome");
-// showSuccessMessage("Success", "Welcome");
