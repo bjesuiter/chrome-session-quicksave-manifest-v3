@@ -3,8 +3,8 @@
  */
 
 import { makePersisted } from "@solid-primitives/storage";
+import { createSignal } from "solid-js";
 import { createStore } from "solid-js/store";
-import { createSignal } from "solid-js/types/server/reactive.js";
 import { ChromeSyncStorageAdapterForSolidStore } from "../chrome-services/chrome-sync-storage-adapter-for-solid-store";
 import { SessionQuicksaveOptions } from "../models/session-quicksave-options";
 
