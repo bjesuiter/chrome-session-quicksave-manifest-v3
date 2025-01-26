@@ -68,7 +68,7 @@ Icon Pack:
 3. Use the icon directly as solidjs component:
 
    ```tsx
-
+   import SomeIcon from "~icons/logos/solidjs-icon";
    ```
 
 ---
