@@ -16,6 +16,7 @@ import { ChromeExtensionLocalStorageSync } from "../persistent-storage/sync-via-
 
 type Message = {
   type: "info" | "warning" | "error" | "success";
+  cancelable?: boolean;
   title?: string;
   message: string;
 };
@@ -36,23 +37,35 @@ export function clearMessages() {
 }
 
 export function clearMessage(index: number) {
-  setUserMessages(index, undefined);
+  setUserMessages((messages) => messages.filter((_, i) => i !== index));
 }
 
-export function showInfoMessage(message: string, title?: string) {
-  setUserMessages([...userMessages, { type: "info", title, message }]);
+export function showInfoMessage(message: Omit<Message, "type">) {
+  setUserMessages([
+    ...userMessages,
+    { type: "info", cancelable: true, ...message },
+  ]);
 }
 
-export function showWarningMessage(message: string, title?: string) {
-  setUserMessages([...userMessages, { type: "warning", title, message }]);
+export function showWarningMessage(message: Omit<Message, "type">) {
+  setUserMessages([
+    ...userMessages,
+    { type: "warning", cancelable: true, ...message },
+  ]);
 }
 
-export function showErrorMessage(message: string, title?: string) {
-  setUserMessages([...userMessages, { type: "error", title, message }]);
+export function showErrorMessage(message: Omit<Message, "type">) {
+  setUserMessages([
+    ...userMessages,
+    { type: "error", cancelable: true, ...message },
+  ]);
 }
 
-export function showSuccessMessage(message: string, title?: string) {
-  setUserMessages([...userMessages, { type: "success", title, message }]);
+export function showSuccessMessage(message: Omit<Message, "type">) {
+  setUserMessages([
+    ...userMessages,
+    { type: "success", cancelable: true, ...message },
+  ]);
 }
 
 export const mostSevereMessageType = createMemo(() => {

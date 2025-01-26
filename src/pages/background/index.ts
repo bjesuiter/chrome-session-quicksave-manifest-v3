@@ -21,13 +21,13 @@ console.log("background service worker loaded");
 chrome.runtime.onInstalled.addListener(async function () {
   // Example Messages & Debugging (with real-time syncing of messages to the popup)
   clearMessages();
-  showSuccessMessage("Success", "Welcome");
+  showSuccessMessage({ title: "Success", message: "Welcome" });
   await delay(1000);
-  showInfoMessage("Info", "Welcome");
+  showInfoMessage({ title: "Info", message: "Welcome" });
   await delay(1000);
-  showWarningMessage("Warning", "Welcome");
+  showWarningMessage({ title: "Warning", message: "Welcome" });
   await delay(1000);
-  showErrorMessage("Error", "Welcome");
+  showErrorMessage({ title: "Error", message: "Welcome" });
 
   try {
     // await initializeOptions();
