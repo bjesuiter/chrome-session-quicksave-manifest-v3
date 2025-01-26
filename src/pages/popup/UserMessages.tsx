@@ -1,5 +1,6 @@
 import { clearMessage, userMessages } from "@src/lib/main/messages-service";
 import { For, Show } from "solid-js";
+import CancelButton from "~icons/iconoir/cancel?width=24px&height=24px";
 
 export function UserMessages() {
   return (
@@ -22,12 +23,11 @@ export function UserMessages() {
               <div class="font-semibold">{title}</div>
               <div class="font-light">{message}</div>
               <Show when={cancelable}>
-                <button
+                <div class="grow" />
+                <CancelButton
                   class="cursor-pointer"
                   onClick={() => clearMessage(index())}
-                >
-                  X
-                </button>
+                />
               </Show>
             </div>
           )}
