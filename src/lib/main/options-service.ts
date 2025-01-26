@@ -6,8 +6,8 @@ import { makePersisted } from "@solid-primitives/storage";
 import { createSignal } from "solid-js";
 import { createStore } from "solid-js/store";
 import { ChromeSyncStorageAdapterForSolidStore } from "../chrome-services/chrome-sync-storage-adapter-for-solid-store";
-import { SessionQuicksaveOptions } from "../models/session-quicksave-options";
 import { ChromeExtensionSyncStorageSync } from "../persistent-storage/sync-via-chrome-sync-storage";
+import { SessionQuicksaveOptions } from "./session-quicksave-options";
 
 export const [optionsLoadingError, setOptionsLoadingError] = createSignal<
   string | undefined

@@ -1,4 +1,4 @@
-import { SessionQuicksaveOptions } from "@src/lib/models/session-quicksave-options";
+import { SessionQuicksaveOptions } from "@src/lib/main/session-quicksave-options";
 
 export async function saveOptions(
   options: SessionQuicksaveOptions,

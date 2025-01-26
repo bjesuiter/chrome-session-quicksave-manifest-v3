@@ -6,7 +6,7 @@ import {
   readOptions,
   saveOptions,
 } from "@src/lib/chrome-services/synced-storage-service";
-import { SessionQuicksaveOptions } from "@src/lib/models/session-quicksave-options";
+import { SessionQuicksaveOptions } from "@src/lib/main/session-quicksave-options";
 import {
   BOOKMARK_BAR_FOLDER_ID,
   createBookmarkFolder,
