@@ -16,7 +16,7 @@ const rawAdapter = {
   },
   setItem: async (key: string, value: string): Promise<unknown> => {
     console.debug(
-      `Write key "${key}" with val "${value}" to chrome.storage.sync: `,
+      `Write key "${key}" to chrome.storage.sync with value:`,
       value,
     );
     await chrome.storage.sync.set({ [key]: value });
