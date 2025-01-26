@@ -62,9 +62,7 @@ export async function getBookmarkChildren(
 export function getBookmarkTreeComplete(): Promise<
   Array<chrome.bookmarks.BookmarkTreeNode>
 > {
-  return new Promise((resolve) => {
-    chrome.bookmarks.getTree(resolve);
-  });
+  return chrome.bookmarks.getTree();
 }
 
 /**
