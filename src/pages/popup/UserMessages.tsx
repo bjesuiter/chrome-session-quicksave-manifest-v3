@@ -9,8 +9,14 @@ export function UserMessages() {
       <div class="flex-col items-stretch bg-slate-100 p-2">
         {/* Each Message */}
         <For each={userMessages}>
-          {({ type, title, message, cancelable }, index) => (
-            <div class="flex items-center space-x-2">
+          {({ type, title, message, cancelable, onClick }, index) => (
+            <div
+              classList={{
+                "flex items-center space-x-2": true,
+                "cursor-pointer": typeof onClick === "function",
+              }}
+              onClick={typeof onClick === "function" ? onClick : null}
+            >
               <div
                 classList={{
                   "size-3 rounded-full": true,
