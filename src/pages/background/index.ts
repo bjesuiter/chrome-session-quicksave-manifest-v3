@@ -1,7 +1,3 @@
-import {
-  setErrBadge,
-  setOkBadge,
-} from "@src/lib/chrome-services/badge-service";
 import { showError } from "@src/lib/chrome-services/notification-service";
 import {
   showErrorMessage,
@@ -10,6 +6,7 @@ import {
 import { optionsStore } from "@src/lib/main/options-service";
 import { isSessionFolderValid } from "@src/lib/utils/is-session-folder-valid";
 import { createEffect } from "solid-js";
+import { backgroundOnMessageListener } from "./background-on-message.listener";
 
 console.log("background service worker loaded");
 
@@ -69,33 +66,4 @@ createEffect(() => {
   });
 });
 
-chrome.runtime.onMessage.addListener(
-  async (message, _sender, _sendResponse) => {
-    console.log("Message received in background:", message);
-
-    if (message.type === "command") {
-      switch (message.command) {
-        case "showOkBadge": {
-          await setOkBadge();
-          // Note: This command cannot get a response since the sender is not available anymore
-          break;
-        }
-        case "showErrBadge": {
-          await setErrBadge();
-          // Note: This command cannot get a response since the sender is not available anymore
-          break;
-        }
-        default: {
-          console.warn(
-            "Unknown command received in background:",
-            message.command,
-          );
-          break;
-        }
-      }
-    }
-
-    // Return `true` if you want to send a response asynchronously
-    return true;
-  },
-);
+chrome.runtime.onMessage.addListener(backgroundOnMessageListener);
