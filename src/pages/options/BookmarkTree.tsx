@@ -1,5 +1,7 @@
-import { createMemo, For, Show } from "solid-js";
-import FolderIcon from "~icons/mdi-light/folder";
+import { createMemo, For, Match, Switch } from "solid-js";
+import BookmarkIcon from "~icons/material-symbols-light/bookmark-outline?width=24px&height=24px";
+import FolderEmptyIcon from "~icons/material-symbols-light/folder-outline-rounded?width=24px&height=24px";
+import FolderFullIcon from "~icons/material-symbols-light/folder-rounded?width=24px&height=24px";
 
 export function BookmarkTree(props: {
   tree: () => chrome.bookmarks.BookmarkTreeNode[];
@@ -12,14 +14,29 @@ export function BookmarkTree(props: {
 
   const childDepth = createMemo(() => props.depth ?? 0 + 1);
 
+  const renderNodeIcon = (node: chrome.bookmarks.BookmarkTreeNode) => {
+    return (
+      <Switch>
+        <Match when={node.url === undefined && node.children?.length === 0}>
+          <FolderEmptyIcon class="mb-[3px] inline" />
+        </Match>
+        <Match when={node.url === undefined && node.children?.length > 0}>
+          <FolderFullIcon class="mb-[3px] inline" />
+        </Match>
+        <Match when={node.url !== undefined}>
+          <BookmarkIcon class="mb-[3px] inline" />
+        </Match>
+      </Switch>
+    );
+  };
+
   const renderNode = (node: chrome.bookmarks.BookmarkTreeNode) => {
     if (node.children?.length > 0) {
       return (
         <details open={false}>
           <summary>
-            <Show when={node.url === undefined}>
-              <FolderIcon />
-            </Show>
+            {renderNodeIcon(node)}
+
             {node.title.length > 0 ? node.title : "Bookmarks"}
           </summary>
           {/* Children of THIS <details> tag */}
@@ -39,6 +56,7 @@ export function BookmarkTree(props: {
             "margin-left": `${childDepth()}rem`,
           }}
         >
+          {renderNodeIcon(node)}
           {node.title}
         </p>
       );
