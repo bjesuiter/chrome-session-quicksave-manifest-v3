@@ -44,23 +44,6 @@ const rawAdapter = {
   },
 };
 
-// Should not be used, since these functions are sync but call async functions internally
-const proxyHandler = {
-  get(target: typeof rawAdapter, prop: string) {
-    console.warn(
-      `Accessing property "${prop}" on ChromeSyncStorageStoreAdapter is not recommended, since it is sync but calls async functions internally.`,
-    );
-    target.getItem(prop);
-  },
-  set(target: typeof rawAdapter, prop: string, value: string) {
-    console.warn(
-      `Setting property "${prop}" on ChromeSyncStorageStoreAdapter is not recommended, since it is sync but calls async functions internally.`,
-    );
-    target.setItem(prop, value);
-    return true;
-  },
-};
-
 export const ChromeSyncStorageAdapterForSolidStore = () => {
-  return new Proxy(rawAdapter, proxyHandler) satisfies AsyncStorage;
+  return rawAdapter satisfies AsyncStorage;
 };
