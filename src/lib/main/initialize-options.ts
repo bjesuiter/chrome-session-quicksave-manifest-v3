@@ -1,7 +1,6 @@
 import {
   bookmarkFolderExists,
   getBookmarkFolderByName,
-  getBookmarkNode,
 } from "@src/lib/chrome-services/bookmark-service";
 import {
   readOptions,
@@ -12,6 +11,7 @@ import {
   BOOKMARK_BAR_FOLDER_ID,
   createBookmarkFolder,
 } from "../chrome-services/bookmark-service";
+import { isSessionFolderValid } from "../utils/is-session-folder-valid";
 
 export const DEFAULT_SESSIONS_FOLDER_NAME = "Sessions";
 
@@ -33,7 +33,7 @@ export async function initializeOptions() {
     console.log(
       `Validating options.sessionsFolderId: ${options.sessionsFolderId}...`,
     );
-    if (isSessionFolderIdValid(options.sessionsFolderId)) {
+    if (isSessionFolderValid(options.sessionsFolderId)) {
       console.log("Session Folder Id is valid.", {
         sessionsFolderId: options.sessionsFolderId,
       });

@@ -6,12 +6,17 @@ import {
 import { optionsStore } from "@src/lib/main/options-service";
 import { isSessionFolderValid } from "@src/lib/utils/is-session-folder-valid";
 import { createEffect } from "solid-js";
+import { unwrap } from "solid-js/store";
 import { backgroundOnMessageListener } from "./background-on-message.listener";
 
 console.log("background service worker loaded");
 
 // Code to run when extension gets installed
 chrome.runtime.onInstalled.addListener(async function () {
+  // For debugging
+  // const options = unwrap(optionsStore);
+  // console.debug("Current optionsStore: ", options);
+
   // Example Messages & Debugging (with real-time syncing of messages to the popup)
   // clearMessages();
   // showSuccessMessage({ title: "Success", message: "Welcome" });
