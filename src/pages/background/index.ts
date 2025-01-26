@@ -4,6 +4,7 @@ import {
 } from "@src/lib/chrome-services/badge-service";
 import { showError } from "@src/lib/chrome-services/notification-service";
 import {
+  clearMessages,
   showErrorMessage,
   showInfoMessage,
   showSuccessMessage,
@@ -11,16 +12,21 @@ import {
 } from "@src/lib/main/messages-service";
 import { optionsStore } from "@src/lib/main/options-service";
 import { isSessionFolderValid } from "@src/lib/utils/is-session-folder-valid";
+import delay from "delay";
 import { createEffect } from "solid-js";
 
 console.log("background service worker loaded");
 
 // Code to run when extension gets installed
 chrome.runtime.onInstalled.addListener(async function () {
-  // Example Messages & Debugging
+  // Example Messages & Debugging (with real-time syncing of messages to the popup)
+  clearMessages();
   showSuccessMessage("Success", "Welcome");
+  await delay(1000);
   showInfoMessage("Info", "Welcome");
+  await delay(1000);
   showWarningMessage("Warning", "Welcome");
+  await delay(1000);
   showErrorMessage("Error", "Welcome");
 
   try {

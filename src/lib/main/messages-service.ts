@@ -2,7 +2,7 @@
  * A service to show messages to the user via the popup ui and the badge service.
  */
 
-import { makePersisted } from "@solid-primitives/storage";
+import { makePersisted, storageSync } from "@solid-primitives/storage";
 import { createEffect, createMemo } from "solid-js";
 import { createStore } from "solid-js/store";
 import {
@@ -12,6 +12,7 @@ import {
   setWarningBadge,
 } from "../chrome-services/badge-service";
 import { ChromeLocalStorageAdapterForSolidStore } from "../chrome-services/chrome-local-storage-adapter-for-solid-store";
+import { ChromeExtensionMessageSync } from "../persistent-storage/sync-via-chrome-runtime-on-message";
 
 type Message = {
   type: "info" | "warning" | "error" | "success";
@@ -26,6 +27,8 @@ export const [userMessages, setUserMessages] = makePersisted(
     // used to sync messages between popup html and background service worker
     name: "userMessages",
     storage: ChromeLocalStorageAdapterForSolidStore(),
+    // messagesSync: uses post message
+    sync: ChromeExtensionMessageSync,
   },
 );
 
