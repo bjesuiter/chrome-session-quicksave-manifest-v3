@@ -29,7 +29,10 @@ chrome.runtime.onInstalled.addListener(async function () {
 
   try {
     // await initializeOptions();
-    showSuccessMessage({ message: "Extension Installed Successfully!" });
+    showSuccessMessage({
+      message: "Extension Installed Successfully!",
+      timeout: 5000,
+    });
     console.log("Extension Installed Successfully!");
   } catch (error) {
     const errorMessage = `Error while creating Extension Options Storage! Please contact the developer about it!`;

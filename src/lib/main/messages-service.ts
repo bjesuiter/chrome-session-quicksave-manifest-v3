@@ -17,8 +17,11 @@ import { ChromeExtensionLocalStorageSync } from "../persistent-storage/sync-via-
 
 type Message = {
   type: "info" | "warning" | "error" | "success";
+  // auto-generated unique id for each message
+  id: string;
   cancelable?: boolean;
   title?: string;
+  timeout?: number;
   message: string;
 };
 
@@ -41,32 +44,39 @@ export function clearMessage(index: number) {
   setUserMessages((messages) => messages.filter((_, i) => i !== index));
 }
 
-export function showInfoMessage(message: Omit<Message, "type">) {
-  setUserMessages([
-    ...userMessages,
-    { type: "info", cancelable: true, ...message },
-  ]);
+export function clearMessageById(id: string) {
+  setUserMessages((messages) => messages.filter((m) => m.id !== id));
 }
 
-export function showWarningMessage(message: Omit<Message, "type">) {
-  setUserMessages([
-    ...userMessages,
-    { type: "warning", cancelable: true, ...message },
-  ]);
+export function showMessage(message: Omit<Message, "id">) {
+  const newMsg = {
+    cancelable: true,
+    id: crypto.randomUUID(),
+    ...message,
+  };
+  setUserMessages([...userMessages, newMsg]);
+
+  if (message.timeout) {
+    setTimeout(() => {
+      clearMessageById(newMsg.id);
+    }, message.timeout);
+  }
 }
 
-export function showErrorMessage(message: Omit<Message, "type">) {
-  setUserMessages([
-    ...userMessages,
-    { type: "error", cancelable: true, ...message },
-  ]);
+export function showInfoMessage(message: Omit<Message, "type" | "id">) {
+  showMessage({ type: "info", ...message });
 }
 
-export function showSuccessMessage(message: Omit<Message, "type">) {
-  setUserMessages([
-    ...userMessages,
-    { type: "success", cancelable: true, ...message },
-  ]);
+export function showWarningMessage(message: Omit<Message, "type" | "id">) {
+  showMessage({ type: "warning", ...message });
+}
+
+export function showErrorMessage(message: Omit<Message, "type" | "id">) {
+  showMessage({ type: "error", ...message });
+}
+
+export function showSuccessMessage(message: Omit<Message, "type" | "id">) {
+  showMessage({ type: "success", ...message });
 }
 
 export const mostSevereMessageType = createMemo(() => {
