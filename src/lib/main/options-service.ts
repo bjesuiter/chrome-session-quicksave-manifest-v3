@@ -1,0 +1,57 @@
+/**
+ * A service which manages the options for this extension and saves them to chrome.storage.sync.
+ */
+
+import { makePersisted } from "@solid-primitives/storage";
+import { createStore } from "solid-js/store";
+import { createSignal } from "solid-js/types/server/reactive.js";
+import { ChromeSyncStorageAdapterForSolidStore } from "../chrome-services/chrome-sync-storage-adapter-for-solid-store";
+import { SessionQuicksaveOptions } from "../models/session-quicksave-options";
+
+export const [optionsLoadingError, setOptionsLoadingError] = createSignal<
+  string | undefined
+>(undefined);
+
+export const [optionsStore, setOptionsStore, _initValues] = makePersisted(
+  // eslint-disable-next-line solid/reactivity
+  createStore<SessionQuicksaveOptions>({
+    sessionsFolderId: undefined,
+  }),
+  {
+    storage: ChromeSyncStorageAdapterForSolidStore(),
+    // The name of this store inside chrome.storage.sync
+    name: "options",
+    serialize: (value: SessionQuicksaveOptions) => JSON.stringify(value),
+    deserialize: (value: string) => {
+      const parsed = SessionQuicksaveOptions.safeParse(value);
+      if (!parsed.success) {
+        setOptionsLoadingError(
+          `Could not parse options from chrome.storage.sync: ${parsed.error.message}`,
+        );
+      }
+      return parsed.data;
+    },
+    // sync API (see below)
+    // sync?: PersistenceSyncAPI
+  },
+);
+
+// async function initStoreFromSyncStorage() {
+//   const syncItems = await chrome.storage.sync.get(["options"]);
+//   console.log(`Read Options from chrome.storage.sync: `, syncItems.options);
+//   if (chrome.runtime.lastError) {
+//     setOptionsLoadingError(chrome.runtime.lastError.message);
+//   }
+//   const optionsParsed = SessionQuicksaveOptions.safeParse(syncItems.options);
+//   if (!optionsParsed.success) {
+//     setOptionsLoadingError(
+//       `Could not parse options from chrome.storage.sync: ${optionsParsed.error.message}`,
+//     );
+//   }
+
+//   const decodedOptions = optionsParsed.data;
+//   setOptionsStore(decodedOptions);
+// }
+
+// // Global Init
+// initStoreFromSyncStorage();
