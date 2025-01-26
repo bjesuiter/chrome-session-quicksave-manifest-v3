@@ -6,6 +6,7 @@ import { makePersisted } from "@solid-primitives/storage";
 import { createEffect, createMemo } from "solid-js";
 import { createStore } from "solid-js/store";
 import {
+  clearBadge,
   setErrBadge,
   setInfoBadge,
   setOkBadge,
@@ -114,6 +115,7 @@ createEffect(() => {
       break;
     default:
       // hide badge
+      clearBadge();
       break;
   }
 });
