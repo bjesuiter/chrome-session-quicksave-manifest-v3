@@ -76,6 +76,9 @@ createEffect(() => {
     } else {
       showWarningMessage({
         message: `Your selected session folder is invalid. Please select a valid folder.`,
+        isModal: true,
+        cancelable: false,
+        id: "invalid-session-folder",
         onClick: () => {
           chrome.runtime.openOptionsPage();
         },

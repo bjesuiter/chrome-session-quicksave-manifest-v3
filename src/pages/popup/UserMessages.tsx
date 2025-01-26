@@ -9,7 +9,7 @@ export function UserMessages() {
       <div class="flex-col items-stretch bg-slate-100 p-2">
         {/* Each Message */}
         <For each={userMessages}>
-          {({ type, title, message, cancelable, onClick }, index) => (
+          {({ type, title, message, cancelable, onClick, isModal }, index) => (
             <div
               classList={{
                 "flex items-center space-x-2": true,
@@ -27,7 +27,9 @@ export function UserMessages() {
                 }}
               />
               <div class="font-semibold">{title}</div>
-              <div class="font-light">{message}</div>
+              <div classList={{ "font-bold": isModal, "font-light": !isModal }}>
+                {message}
+              </div>
               <Show when={cancelable}>
                 <div class="grow" />
                 <CancelButton

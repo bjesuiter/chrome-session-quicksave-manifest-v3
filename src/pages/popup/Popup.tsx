@@ -1,6 +1,7 @@
 import { saveSession } from "@src/lib/chrome-services/bookmark-service";
 import { readOptionSessionsFolderId } from "@src/lib/chrome-services/synced-storage-service";
 import { getTabsInWindow } from "@src/lib/chrome-services/tabs-service";
+import { hasModalMessage } from "@src/lib/main/messages-service";
 import "@src/styles/tailwind.css";
 import { format } from "date-fns";
 import { createSignal, Show } from "solid-js";
@@ -81,57 +82,59 @@ export function PopupPage() {
   // });
 
   return (
-    <>
+    <div class="min-w-[300px]">
       <UserMessages />
 
-      <form
-        onSubmit={quicksaveSession}
-        class="flex h-fit w-[300px] flex-col gap-2 bg-slate-800 px-4 pb-10 pt-4 text-white"
-      >
-        <label for="sessionNameInput" class="pl-1 text-lg font-semibold">
-          Please name your session
-        </label>
+      <Show when={!hasModalMessage()}>
+        <form
+          onSubmit={quicksaveSession}
+          class="flex h-fit w-[300px] flex-col gap-2 bg-slate-800 px-4 pb-10 pt-4 text-white"
+        >
+          <label for="sessionNameInput" class="pl-1 text-lg font-semibold">
+            Please name your session
+          </label>
 
-        <input
-          type="text"
-          id="sessionNameInput"
-          placeholder="Session Name"
-          classList={{
-            "m-1 rounded p-2 text-base text-slate-700": true,
-            "border-red-500 focus:outline-none focus:ring-red-500 focus:ring-2 focus:ring-inset focus:ring-offset-1":
-              isInputError(),
-            "border-gray-300 focus:outline-none focus:ring-blue-500 focus:ring-2 focus:ring-inset focus:ring-offset-1":
-              !isInputError(),
-          }}
-          required
-          value={sessionName()}
-          // onInput={(evt) => setSessionName(evt.target.value.trim())}
-          onInput={validateInput}
-        />
+          <input
+            type="text"
+            id="sessionNameInput"
+            placeholder="Session Name"
+            classList={{
+              "m-1 rounded p-2 text-base text-slate-700": true,
+              "border-red-500 focus:outline-none focus:ring-red-500 focus:ring-2 focus:ring-inset focus:ring-offset-1":
+                isInputError(),
+              "border-gray-300 focus:outline-none focus:ring-blue-500 focus:ring-2 focus:ring-inset focus:ring-offset-1":
+                !isInputError(),
+            }}
+            required
+            value={sessionName()}
+            // onInput={(evt) => setSessionName(evt.target.value.trim())}
+            onInput={validateInput}
+          />
 
-        <div class="flex justify-end gap-2">
-          <button
-            type="button"
-            onClick={closePopup}
-            class="rounded border-2 border-blue-500 bg-white px-4 py-2 font-semibold text-blue-700 hover:border-transparent hover:bg-blue-500 hover:text-white"
-          >
-            Cancel
-          </button>
-          <button
-            type="submit"
-            class="rounded border-2 border-green-500 bg-white px-4 py-2 font-semibold text-green-700 hover:border-transparent hover:bg-green-500 hover:text-white"
-          >
-            Save
-          </button>
-        </div>
-
-        <Show when={saveError()}>
-          <div class="mt-4 rounded bg-red-600 p-2 text-white">
-            <h3 class="text-lg font-semibold">{saveError().title}</h3>
-            <p class="text-sm">{saveError().message}</p>
+          <div class="flex justify-end gap-2">
+            <button
+              type="button"
+              onClick={closePopup}
+              class="rounded border-2 border-blue-500 bg-white px-4 py-2 font-semibold text-blue-700 hover:border-transparent hover:bg-blue-500 hover:text-white"
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              class="rounded border-2 border-green-500 bg-white px-4 py-2 font-semibold text-green-700 hover:border-transparent hover:bg-green-500 hover:text-white"
+            >
+              Save
+            </button>
           </div>
-        </Show>
-      </form>
-    </>
+
+          <Show when={saveError()}>
+            <div class="mt-4 rounded bg-red-600 p-2 text-white">
+              <h3 class="text-lg font-semibold">{saveError().title}</h3>
+              <p class="text-sm">{saveError().message}</p>
+            </div>
+          </Show>
+        </form>
+      </Show>
+    </div>
   );
 }
