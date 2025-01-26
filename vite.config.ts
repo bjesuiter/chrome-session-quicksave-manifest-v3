@@ -1,5 +1,6 @@
 import { crx } from "@crxjs/vite-plugin";
 import { resolve } from "path";
+import Icons from "unplugin-icons/vite";
 import solidPlugin from "vite-plugin-solid";
 import { defineConfig } from "vitest/config";
 import manifest from "./src/manifest";
@@ -19,7 +20,12 @@ export default defineConfig(({ mode }) => {
   }
 
   return {
-    plugins: [solidPlugin(), crx({ manifest })],
+    plugins: [
+      solidPlugin(),
+      // Setup Instructions for unplugin-icons: https://github.com/unplugin/unplugin-icons
+      Icons({ compiler: "solid" }),
+      crx({ manifest }),
+    ],
     resolve: {
       alias: {
         "@src": root,

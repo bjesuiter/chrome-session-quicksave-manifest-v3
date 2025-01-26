@@ -11,7 +11,7 @@
     "esModuleInterop": true,
     "resolveJsonModule": true,
     "moduleResolution": "bundler",
-    "types": ["vite/client", "node"],
+    "types": ["vite/client", "node", "unplugin-icons/types/solid"],
     "noFallthroughCasesInSwitch": true,
     "allowSyntheticDefaultImports": true,
     "lib": ["dom", "dom.iterable", "esnext"],
