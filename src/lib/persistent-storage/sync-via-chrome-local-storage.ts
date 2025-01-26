@@ -25,6 +25,6 @@ export const ChromeExtensionLocalStorageSync = [
     });
   },
   (key: string, value: string | null | undefined): void => {
-    // NO-OP
+    // NO-OP Updater, since writing to chrome.storage.local provides the update automatically
   },
 ] satisfies PersistenceSyncAPI;
