@@ -1,8 +1,8 @@
 import {
   badgeErrNotification,
   badgeOkNotification,
-  showError,
-} from "@src/lib/chrome-services/notification-service";
+} from "@src/lib/chrome-services/badge-service";
+import { showError } from "@src/lib/chrome-services/notification-service";
 import { optionsStore } from "@src/lib/main/options-service";
 import { isSessionFolderValid } from "@src/lib/utils/is-session-folder-valid";
 import { createEffect } from "solid-js";
