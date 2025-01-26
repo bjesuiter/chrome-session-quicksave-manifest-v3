@@ -49,6 +49,30 @@ Icon Pack:
 
 ---
 
+# Dev Notes
+
+## Use Icons
+
+1. Find icon at iconify: https://icon-sets.iconify.design/
+2. Maybe Skip: Install the iconify-json package for the icon set you want to use:
+
+   ```bash
+   bun i -D @iconify-json/mdi
+
+   # or install the full iconfiy icon library (120MB)
+   # only used icons will be included in the final build
+
+    bun i -D @iconify/json
+   ```
+
+3. Use the icon directly as solidjs component:
+
+   ```tsx
+
+   ```
+
+---
+
 ## Changelog
 
 ### 0.3.0 (Beta) - 2020-11-13 - added basic options page & Session Folder initialization after install
