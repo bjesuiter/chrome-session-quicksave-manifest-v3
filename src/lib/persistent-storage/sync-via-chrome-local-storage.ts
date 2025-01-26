@@ -12,10 +12,10 @@ export const ChromeExtensionLocalStorageSync = [
   (subscriber: PersistenceSyncCallback) => {
     chrome.storage.local.onChanged.addListener((changes) => {
       for (const [key, { oldValue, newValue }] of Object.entries(changes)) {
-        console.log(
-          `Storage key "${key}" in namespace "local" changed.`,
-          `Old value was "${oldValue}", new value is "${newValue}".`,
-        );
+        // console.debug(
+        //   `Storage key "${key}" in namespace "local" changed.`,
+        //   `Old value was "${oldValue}", new value is "${newValue}".`,
+        // );
         subscriber({
           key,
           newValue,
