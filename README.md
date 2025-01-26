@@ -65,14 +65,12 @@ Icon Pack:
     bun i -D @iconify/json
    ```
 
-3. Use the icon directly as tailwind class :
+3. Use the icon directly as solidjs component:
 
-   ```html
-   <span class="iconify mdi-light--home"></span>
-   <span class="iconify-color vscode-icons--file-type-tailwind"></span>
+   ```tsx
+   // syntax: ~icons/<icon-set>/<icon-name>
+   import SomeIcon from "~icons/logos/solidjs-icon";
    ```
-
-More info: https://iconify.design/docs/usage/css/tailwind/#iconify-for-tailwind-css
 
 ---
 

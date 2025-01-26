@@ -1,4 +1,5 @@
-import { createMemo, For } from "solid-js";
+import { createMemo, For, Show } from "solid-js";
+import FolderIcon from "~icons/mdi-light/folder";
 
 export function BookmarkTree(props: {
   tree: () => chrome.bookmarks.BookmarkTreeNode[];
@@ -15,7 +16,12 @@ export function BookmarkTree(props: {
     if (node.children?.length > 0) {
       return (
         <details open={false}>
-          <summary>{node.title.length > 0 ? node.title : "Bookmarks"}</summary>
+          <summary>
+            <Show when={node.url === undefined}>
+              <FolderIcon />
+            </Show>
+            {node.title.length > 0 ? node.title : "Bookmarks"}
+          </summary>
           {/* Children of THIS <details> tag */}
           <div
             style={{
