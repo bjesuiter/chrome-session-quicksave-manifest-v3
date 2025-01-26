@@ -3,7 +3,10 @@ import {
   setOkBadge,
 } from "@src/lib/chrome-services/badge-service";
 import { showError } from "@src/lib/chrome-services/notification-service";
-import { showSuccessMessage } from "@src/lib/main/messages-service";
+import {
+  showErrorMessage,
+  showSuccessMessage,
+} from "@src/lib/main/messages-service";
 import { optionsStore } from "@src/lib/main/options-service";
 import { isSessionFolderValid } from "@src/lib/utils/is-session-folder-valid";
 import { createEffect } from "solid-js";
@@ -52,7 +55,9 @@ createEffect(() => {
       console.debug(`Session Folder Id "${sessionsFolderId}" is valid.`);
     } else {
       console.error(`Session Folder Id "${sessionsFolderId}" is invalid!`);
-      setErrBadge();
+      showErrorMessage({
+        message: `The selected Session Folder is invalid. Please select a valid folder.`,
+      });
       // Reset invalid sessionFolderId ?
       // setOptionsStore("sessionsFolderId", undefined);
       // TODO: show user error
