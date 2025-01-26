@@ -25,8 +25,11 @@ export const [optionsStore, setOptionsStore, _initValues] = makePersisted(
     // The name of this store inside chrome.storage.sync
     name: "options",
     serialize: (value: SessionQuicksaveOptions) => JSON.stringify(value),
-    deserialize: (value: string) => {
-      const parsed = SessionQuicksaveOptions.safeParse(JSON.parse(value));
+    deserialize: (value: string | Record<string, unknown>) => {
+      if (typeof value === "string") {
+        value = JSON.parse(value);
+      }
+      const parsed = SessionQuicksaveOptions.safeParse(value);
       if (!parsed.success) {
         console.error({
           message: `Could not parse options from chrome.storage.sync: ${parsed.error.message}`,
@@ -37,6 +40,7 @@ export const [optionsStore, setOptionsStore, _initValues] = makePersisted(
         // throw new Error(
         //   `Could not parse options from chrome.storage.sync: ${parsed.error.message}`,
         // );
+        return;
       }
       return parsed.data;
     },
