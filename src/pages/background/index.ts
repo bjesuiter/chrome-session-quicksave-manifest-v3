@@ -3,10 +3,12 @@ import {
   showErrorMessage,
   showSuccessMessage,
 } from "@src/lib/main/messages-service";
-import { optionsStore } from "@src/lib/main/options-service";
+import {
+  optionsLoadingError,
+  optionsStore,
+} from "@src/lib/main/options-service";
 import { isSessionFolderValid } from "@src/lib/utils/is-session-folder-valid";
 import { createEffect } from "solid-js";
-import { unwrap } from "solid-js/store";
 import { backgroundOnMessageListener } from "./background-on-message.listener";
 
 console.log("background service worker loaded");
@@ -49,6 +51,15 @@ createEffect(() => {
   // check if options are initialized
   if (!optionsStore.isInitialized) {
     console.debug("Options are not initialized yet. Skipping validation.");
+    return;
+  }
+
+  // check option loading errors
+  if (optionsLoadingError()) {
+    console.error("Error while loading options: ", optionsLoadingError());
+    showErrorMessage({
+      message: `Error while loading options: ${optionsLoadingError()}`,
+    });
     return;
   }
 
