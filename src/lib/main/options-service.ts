@@ -16,6 +16,8 @@ export const [optionsStore, setOptionsStore, _initValues] = makePersisted(
   // eslint-disable-next-line solid/reactivity
   createStore<SessionQuicksaveOptions>({
     sessionsFolderId: undefined,
+    isInitialized: false,
+    openBookmarkTreeNodes: [],
   }),
   {
     storage: ChromeSyncStorageAdapterForSolidStore(),
