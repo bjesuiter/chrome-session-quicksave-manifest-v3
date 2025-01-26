@@ -54,7 +54,7 @@ Icon Pack:
 ## Use Icons
 
 1. Find icon at iconify: https://icon-sets.iconify.design/
-2. Maybe Skip: Install the iconify-json package for the icon set you want to use:
+2. Maybe Skip: Install the iconify-json package for the icon set you want to use or use full iconify library:
 
    ```bash
    bun i -D @iconify-json/mdi
@@ -65,12 +65,14 @@ Icon Pack:
     bun i -D @iconify/json
    ```
 
-3. Use the icon directly as solidjs component:
+3. Use the icon directly as tailwind class :
 
-   ```tsx
-   // syntax: ~icons/<icon-set>/<icon-name>
-   import SomeIcon from "~icons/logos/solidjs-icon";
+   ```html
+   <span class="iconify mdi-light--home"></span>
+   <span class="iconify-color vscode-icons--file-type-tailwind"></span>
    ```
+
+More info: https://iconify.design/docs/usage/css/tailwind/#iconify-for-tailwind-css
 
 ---
 
