@@ -2,6 +2,7 @@ import { showError } from "@src/lib/chrome-services/notification-service";
 import {
   showErrorMessage,
   showSuccessMessage,
+  showWarningMessage,
 } from "@src/lib/main/messages-service";
 import {
   optionsLoadingError,
@@ -9,6 +10,7 @@ import {
 } from "@src/lib/main/options-service";
 import { isSessionFolderValid } from "@src/lib/utils/is-session-folder-valid";
 import { createEffect } from "solid-js";
+import { unwrap } from "solid-js/store";
 import { backgroundOnMessageListener } from "./background-on-message.listener";
 
 console.log("background service worker loaded");
@@ -54,6 +56,8 @@ createEffect(() => {
     return;
   }
 
+  console.debug("Options are initialized with: ", unwrap(optionsStore));
+
   // check option loading errors
   if (optionsLoadingError()) {
     console.error("Error while loading options: ", optionsLoadingError());
@@ -70,17 +74,11 @@ createEffect(() => {
     if (isValid) {
       console.debug(`Session Folder Id "${sessionsFolderId}" is valid.`);
     } else {
-      console.error(`Session Folder Id "${sessionsFolderId}" is invalid!`);
-      showErrorMessage({
-        message: `The selected Session Folder is invalid. Please select a valid folder.`,
+      showWarningMessage({
+        message: `Your selected session folder is invalid. Please select a valid folder.`,
       });
       // Reset invalid sessionFolderId ?
       // setOptionsStore("sessionsFolderId", undefined);
-      // TODO: show user error
-      // showError(
-      //   "Invalid Session Folder",
-      //   `The selected Session Folder is invalid. Please select a valid folder.`,
-      // );
     }
   });
 });
