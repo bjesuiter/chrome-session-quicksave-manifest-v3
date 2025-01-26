@@ -1,6 +1,6 @@
 import {
-  badgeErrNotification,
-  badgeOkNotification,
+  setErrBadge,
+  setOkBadge,
 } from "@src/lib/chrome-services/badge-service";
 import { showError } from "@src/lib/chrome-services/notification-service";
 import { optionsStore } from "@src/lib/main/options-service";
@@ -40,7 +40,7 @@ createEffect(() => {
       console.debug(`Session Folder Id "${sessionsFolderId}" is valid.`);
     } else {
       console.error(`Session Folder Id "${sessionsFolderId}" is invalid!`);
-      badgeErrNotification();
+      setErrBadge();
       // Reset invalid sessionFolderId ?
       // setOptionsStore("sessionsFolderId", undefined);
       // TODO: show user error
@@ -59,12 +59,12 @@ chrome.runtime.onMessage.addListener(
     if (message.type === "command") {
       switch (message.command) {
         case "showOkBadge": {
-          await badgeOkNotification();
+          await setOkBadge();
           // Note: This command cannot get a response since the sender is not available anymore
           break;
         }
         case "showErrBadge": {
-          await badgeErrNotification();
+          await setErrBadge();
           // Note: This command cannot get a response since the sender is not available anymore
           break;
         }
