@@ -1,6 +1,6 @@
 import { AsyncStorage } from "@solid-primitives/storage";
 
-const rawAdapter = {
+export const ChromeSyncStorageAdapterForSolidStore = {
   // CAUTION: Throws on errors!
   getItem: async (key: string): Promise<string | null> => {
     const syncItems = await chrome.storage.sync.get([key]);
@@ -42,8 +42,4 @@ const rawAdapter = {
     }
     return;
   },
-};
-
-export const ChromeSyncStorageAdapterForSolidStore = () => {
-  return rawAdapter satisfies AsyncStorage;
-};
+} satisfies AsyncStorage;

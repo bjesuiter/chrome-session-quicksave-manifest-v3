@@ -21,19 +21,22 @@ export const [optionsStore, setOptionsStore, _initValues] = makePersisted(
     openBookmarkTreeNodes: [],
   }),
   {
-    storage: ChromeSyncStorageAdapterForSolidStore(),
+    storage: ChromeSyncStorageAdapterForSolidStore,
     // The name of this store inside chrome.storage.sync
     name: "options",
     serialize: (value: SessionQuicksaveOptions) => JSON.stringify(value),
     deserialize: (value: string) => {
       const parsed = SessionQuicksaveOptions.safeParse(JSON.parse(value));
       if (!parsed.success) {
-        setOptionsLoadingError(
-          `Could not parse options from chrome.storage.sync: ${parsed.error.message}`,
-        );
-        throw new Error(
-          `Could not parse options from chrome.storage.sync: ${parsed.error.message}`,
-        );
+        console.error({
+          message: `Could not parse options from chrome.storage.sync: ${parsed.error.message}`,
+        });
+        // setOptionsLoadingError(
+        //   `Could not parse options from chrome.storage.sync: ${parsed.error.message}`,
+        // );
+        // throw new Error(
+        //   `Could not parse options from chrome.storage.sync: ${parsed.error.message}`,
+        // );
       }
       return parsed.data;
     },
