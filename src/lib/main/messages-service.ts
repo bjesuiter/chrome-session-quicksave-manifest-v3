@@ -2,6 +2,7 @@
  * A service to show messages to the user via the popup ui and the badge service.
  */
 
+import { makePersisted } from "@solid-primitives/storage";
 import { createEffect, createMemo } from "solid-js";
 import { createStore } from "solid-js/store";
 import {
@@ -10,6 +11,7 @@ import {
   setOkBadge,
   setWarningBadge,
 } from "../chrome-services/badge-service";
+import { ChromeLocalStorageAdapterForSolidStore } from "../chrome-services/chrome-local-storage-adapter-for-solid-store";
 
 type Message = {
   type: "info" | "warning" | "error" | "success";
@@ -17,7 +19,15 @@ type Message = {
   message: string;
 };
 
-export const [userMessages, setUserMessages] = createStore<Message[]>([]);
+export const [userMessages, setUserMessages] = makePersisted(
+  // eslint-disable-next-line solid/reactivity
+  createStore<Message[]>([]),
+  {
+    // used to sync messages between popup html and background service worker
+    name: "userMessages",
+    storage: ChromeLocalStorageAdapterForSolidStore(),
+  },
+);
 
 export function clearMessages() {
   setUserMessages([]);
@@ -44,7 +54,6 @@ export function showSuccessMessage(message: string, title?: string) {
 }
 
 export const mostSevereMessageType = createMemo(() => {
-  // eslint-disable-next-line solid/reactivity
   const messages = userMessages;
 
   if (messages.length === 0) {
