@@ -16,13 +16,14 @@ import { ChromeLocalStorageAdapterForSolidStore } from "../chrome-services/chrom
 import { ChromeExtensionLocalStorageSync } from "../persistent-storage/sync-via-chrome-local-storage";
 
 type Message = {
+  message: string;
   type: "info" | "warning" | "error" | "success";
   // auto-generated unique id for each message
   id: string;
-  cancelable?: boolean;
-  title?: string;
-  timeout?: number;
-  message: string;
+  cancelable?: boolean | undefined;
+  title?: string | undefined;
+  timeout?: number | undefined;
+  onClick?: (() => void) | (() => Promise<void>) | undefined;
 };
 
 export const [userMessages, setUserMessages] = makePersisted(
