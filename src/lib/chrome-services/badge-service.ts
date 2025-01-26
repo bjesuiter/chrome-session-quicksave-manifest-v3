@@ -6,8 +6,10 @@ export async function badgeOkNotification(timeout = 2000) {
   );
   await chrome.action.setBadgeText({ text: "Ok" });
 
-  await delay(timeout);
-  clearBadge();
+  if (timeout > 0) {
+    await delay(timeout);
+    clearBadge();
+  }
 }
 
 export async function badgeErrNotification(timeout = 2000) {
@@ -16,8 +18,10 @@ export async function badgeErrNotification(timeout = 2000) {
   );
   await chrome.action.setBadgeText({ text: "Err" });
 
-  await delay(timeout);
-  clearBadge();
+  if (timeout > 0) {
+    await delay(timeout);
+    clearBadge();
+  }
 }
 
 export async function clearBadge() {
