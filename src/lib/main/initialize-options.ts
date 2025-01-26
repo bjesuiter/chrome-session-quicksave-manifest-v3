@@ -101,9 +101,3 @@ async function ensureDefaultSessionFolderAvailability(): Promise<chrome.bookmark
 
   return defaultSessionFolderNode;
 }
-
-async function isSessionFolderIdValid(sessionFolderId) {
-  if (!sessionFolderId) return false;
-  const sessionsFolderNode = await getBookmarkNode(sessionFolderId);
-  return !!sessionsFolderNode;
-}
