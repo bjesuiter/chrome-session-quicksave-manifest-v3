@@ -3,19 +3,31 @@ import { For, Show } from "solid-js";
 import CancelButton from "~icons/iconoir/cancel?width=24px&height=24px";
 
 export function UserMessages() {
+  const getOnClickHandler = (id) => {
+    if (id === "invalid-session-folder") {
+      return () => {
+        chrome.runtime.openOptionsPage();
+      };
+    }
+  };
+
+  const isOnClickMessage = (id) => {
+    return getOnClickHandler(id) !== undefined;
+  };
+
   return (
     <Show when={userMessages.length > 0}>
       {/* Messages Area */}
       <div class="flex-col items-stretch bg-slate-100 p-2">
         {/* Each Message */}
         <For each={userMessages}>
-          {({ type, title, message, cancelable, onClick, isModal }, index) => (
+          {({ type, title, message, cancelable, isModal, id }, index) => (
             <div
               classList={{
                 "flex items-center space-x-2": true,
-                "cursor-pointer": typeof onClick === "function",
+                "cursor-pointer": isOnClickMessage(id),
               }}
-              onClick={typeof onClick === "function" ? onClick : null}
+              onClick={isOnClickMessage(id) ? getOnClickHandler(id) : undefined}
             >
               <div
                 classList={{

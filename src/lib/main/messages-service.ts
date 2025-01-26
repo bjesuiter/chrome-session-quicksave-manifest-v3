@@ -26,9 +26,6 @@ type Message = {
 
   // whether this message should block normal popup operation
   isModal?: boolean | undefined;
-
-  // TODO: onClick not working yet!
-  onClick?: (() => void) | (() => Promise<void>) | undefined;
 };
 
 export const [userMessages, setUserMessages] = makePersisted(
