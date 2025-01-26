@@ -6,6 +6,10 @@ const rawAdapter = {
     const syncItems = await chrome.storage.sync.get([key]);
     console.debug(`Read ${key} from chrome.storage.sync: `, syncItems[key]);
     if (chrome.runtime.lastError) {
+      console.error(
+        `Error reading key "${key}" from chrome.storage.sync: `,
+        chrome.runtime.lastError,
+      );
       throw chrome.runtime.lastError;
     }
     return syncItems[key];
@@ -17,6 +21,10 @@ const rawAdapter = {
     );
     await chrome.storage.sync.set({ [key]: value });
     if (chrome.runtime.lastError) {
+      console.error(
+        `Error writing key "${key}" to chrome.storage.sync: `,
+        chrome.runtime.lastError,
+      );
       throw chrome.runtime.lastError;
     }
     return;
@@ -26,6 +34,10 @@ const rawAdapter = {
 
     await chrome.storage.sync.remove([key]);
     if (chrome.runtime.lastError) {
+      console.error(
+        `Error removing key "${key}" from chrome.storage.sync: `,
+        chrome.runtime.lastError,
+      );
       throw chrome.runtime.lastError;
     }
     return;
