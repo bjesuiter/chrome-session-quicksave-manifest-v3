@@ -1,4 +1,5 @@
 import { isDev } from "@src/lib/flags";
+import { optionsStore } from "@src/lib/main/options-service";
 import "@src/styles/tailwind.css";
 import { createResource, Show } from "solid-js";
 import { BookmarkTree } from "./BookmarkTree";
@@ -33,6 +34,12 @@ export function OptionsPage() {
               DEV Section
             </h2>
             <div class="border-b-2 border-dashed border-red-600" />
+            <div class="mt-4 flex-col gap-4">
+              <h3 class="text-lg font-semibold">
+                Stored Options in chrome.storage.sync
+              </h3>
+              <pre>{JSON.stringify(optionsStore, null, 2)}</pre>
+            </div>
           </Show>
         </section>
       </div>
