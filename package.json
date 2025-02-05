@@ -2,7 +2,7 @@
   "name": "chrome-session-quicksave",
   "displayName": "Session Quicksave V3",
   "description": "A Chrome extension for quickly saving all open tabs inside a window into the browser bookmarks (with some configurability)",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "license": "MIT",
   "type": "module",
   "repository": {
