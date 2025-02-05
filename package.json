@@ -23,7 +23,7 @@
     "test": "vitest",
     "coverage": "vitest run --coverage",
     "prettier": "prettier --write .",
-    "deploy": "bun run build && bestzip deploy.zip dist/*"
+    "finalize": "bun run build && bestzip deploy.zip dist/*"
   },
   "dependencies": {
     "@solid-primitives/storage": "^4.3.1",
