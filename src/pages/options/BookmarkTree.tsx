@@ -1,11 +1,13 @@
 import {
   bookmarkTreeNodeIsOpen,
   bookmarkTreeNodeSetOpen,
+  isNodeSessionsFolder,
 } from "@src/lib/main/options-service";
-import { createMemo, For, Match, Switch } from "solid-js";
+import { createMemo, For, Match, Show, Switch } from "solid-js";
 import BookmarkIcon from "~icons/material-symbols-light/bookmark-outline?width=24px&height=24px";
 import FolderEmptyIcon from "~icons/material-symbols-light/folder-outline-rounded?width=24px&height=24px";
 import FolderFullIcon from "~icons/material-symbols-light/folder-rounded?width=24px&height=24px";
+import StarIcon from "~icons/material-symbols-light/kid-star?width=24px&height=24px";
 
 export function BookmarkTree(props: {
   tree: () => chrome.bookmarks.BookmarkTreeNode[];
@@ -33,21 +35,31 @@ export function BookmarkTree(props: {
     );
   };
 
-  const handleNodeToggle = (event: ToggleEvent, node) => {
-    bookmarkTreeNodeSetOpen(node, event.newState === "open");
-  };
-
   const renderNode = (node: chrome.bookmarks.BookmarkTreeNode) => {
     if (node.children?.length > 0) {
       return (
         <details
+          class="w-max"
           open={bookmarkTreeNodeIsOpen(node)}
-          onToggle={(e) => handleNodeToggle(e, node)}
+          onToggle={(event: ToggleEvent) =>
+            bookmarkTreeNodeSetOpen(node, event.newState === "open")
+          }
         >
           <summary>
-            {renderNodeIcon(node)}
+            <span
+              classList={{
+                "border-b-0 border-solid border-yellow-400 pb-1 pr-1 m-1":
+                  isNodeSessionsFolder(node.id),
+              }}
+            >
+              {renderNodeIcon(node)}
 
-            {node.title.length > 0 ? node.title : "Bookmarks"}
+              {node.title.length > 0 ? node.title : "Bookmarks"}
+
+              <Show when={isNodeSessionsFolder(node.id)}>
+                <StarIcon class="mx-1 mb-[3px] inline text-lg text-yellow-400 drop-shadow-md" />
+              </Show>
+            </span>
           </summary>
           {/* Children of THIS <details> tag */}
           <div

@@ -89,3 +89,11 @@ export function bookmarkTreeNodeIsOpen(
 ) {
   return optionsStore.openBookmarkTreeNodes.includes(node.id);
 }
+
+export function setSessionsFolderId(folderId: string) {
+  setOptionsStore("sessionsFolderId", folderId);
+}
+
+export function isNodeSessionsFolder(folderId: string) {
+  return folderId === optionsStore.sessionsFolderId;
+}
