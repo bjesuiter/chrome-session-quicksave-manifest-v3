@@ -1,13 +1,39 @@
 import { isDev } from "@src/lib/flags";
 import { optionsStore } from "@src/lib/main/options-service";
 import "@src/styles/tailwind.css";
-import { createResource, Show } from "solid-js";
+import { createMemo, createResource, Show } from "solid-js";
 import { BookmarkTree } from "./BookmarkTree";
 
 export function OptionsPage() {
-  const [bookmarkTree, { refetch }] = createResource(async () =>
-    chrome.bookmarks.getTree(),
+  const [bookmarkTree] = createResource(async () => chrome.bookmarks.getTree());
+
+  // an array of all nodes in the hirarchy of the selected sessions folder
+  const [selectedHirarchyNodes] = createResource(
+    () => optionsStore.sessionsFolderId,
+    async (sessionsFolderId) => {
+      const hirarchyNodes = [];
+
+      if (!sessionsFolderId || sessionsFolderId === "") return hirarchyNodes;
+      console.log("optionsStore.sessionsFolderId", sessionsFolderId);
+
+      let nodes = await chrome.bookmarks.get(sessionsFolderId);
+      while (nodes[0] && nodes[0].parentId) {
+        nodes = await chrome.bookmarks.get(nodes[0].parentId);
+        if (!nodes || !nodes[0]) return hirarchyNodes;
+        hirarchyNodes.push(nodes[0]);
+      }
+
+      return hirarchyNodes;
+    },
   );
+
+  // an array of all node IDs in the hirarchy of the selected sessions folder
+  const selectedHirarchyNodeIDs = createMemo(() => {
+    if (!selectedHirarchyNodes()) return [];
+    const nodeIDs = selectedHirarchyNodes().map((node) => node.id);
+    console.log("selectedHirarchyNodeIDs", nodeIDs);
+    return nodeIDs;
+  });
 
   return (
     <div class="fixed inset-0 bg-slate-100 text-slate-800">
@@ -31,7 +57,10 @@ export function OptionsPage() {
             <p class="my-4">
               <i>Current session folder marked with a golden star</i>
             </p>
-            <BookmarkTree tree={bookmarkTree} />
+            <BookmarkTree
+              tree={bookmarkTree}
+              selectedHirarchyNodeIDs={selectedHirarchyNodeIDs()}
+            />
           </div>
 
           <Show when={isDev}>

@@ -15,10 +15,8 @@ export function BookmarkTree(props: {
   tree: () => chrome.bookmarks.BookmarkTreeNode[];
   class?: string;
   depth?: number;
+  selectedHirarchyNodeIDs: string[];
 }) {
-  //   createEffect(() => {
-  //     console.log("BookmarkTree", props.tree());
-  //   });
   const childDepth = createMemo(() => props.depth ?? 0 + 1);
 
   const renderNodeIcon = (node: chrome.bookmarks.BookmarkTreeNode) => {
@@ -42,7 +40,10 @@ export function BookmarkTree(props: {
       return (
         <details
           class="w-max"
-          open={bookmarkTreeNodeIsOpen(node)}
+          open={
+            bookmarkTreeNodeIsOpen(node) ||
+            props.selectedHirarchyNodeIDs.includes(node.id)
+          }
           onToggle={(event: ToggleEvent) =>
             bookmarkTreeNodeSetOpen(node, event.newState === "open")
           }
@@ -79,7 +80,11 @@ export function BookmarkTree(props: {
               "margin-left": `${childDepth()}rem`,
             }}
           >
-            <BookmarkTree tree={() => node.children} depth={childDepth()} />
+            <BookmarkTree
+              tree={() => node.children}
+              depth={childDepth()}
+              selectedHirarchyNodeIDs={props.selectedHirarchyNodeIDs}
+            />
           </div>
         </details>
       );
