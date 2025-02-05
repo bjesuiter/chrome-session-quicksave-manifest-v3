@@ -67,3 +67,25 @@ export const [optionsStore, setOptionsStore, _initValues] = makePersisted(
 
 // // Global Init
 // initStoreFromSyncStorage();
+
+// HELPER Functions
+
+export function bookmarkTreeNodeSetOpen(
+  node: chrome.bookmarks.BookmarkTreeNode,
+  isOpen: boolean,
+) {
+  const openNodes = new Set(optionsStore.openBookmarkTreeNodes);
+  console.log("bookmarkTreeNodeSetOpen", node, isOpen);
+  if (isOpen) {
+    openNodes.add(node.id);
+  } else {
+    openNodes.delete(node.id);
+  }
+  setOptionsStore("openBookmarkTreeNodes", Array.from(openNodes));
+}
+
+export function bookmarkTreeNodeIsOpen(
+  node: chrome.bookmarks.BookmarkTreeNode,
+) {
+  return optionsStore.openBookmarkTreeNodes.includes(node.id);
+}

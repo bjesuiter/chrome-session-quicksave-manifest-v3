@@ -1,3 +1,7 @@
+import {
+  bookmarkTreeNodeIsOpen,
+  bookmarkTreeNodeSetOpen,
+} from "@src/lib/main/options-service";
 import { createMemo, For, Match, Switch } from "solid-js";
 import BookmarkIcon from "~icons/material-symbols-light/bookmark-outline?width=24px&height=24px";
 import FolderEmptyIcon from "~icons/material-symbols-light/folder-outline-rounded?width=24px&height=24px";
@@ -11,7 +15,6 @@ export function BookmarkTree(props: {
   //   createEffect(() => {
   //     console.log("BookmarkTree", props.tree());
   //   });
-
   const childDepth = createMemo(() => props.depth ?? 0 + 1);
 
   const renderNodeIcon = (node: chrome.bookmarks.BookmarkTreeNode) => {
@@ -30,10 +33,17 @@ export function BookmarkTree(props: {
     );
   };
 
+  const handleNodeToggle = (event: ToggleEvent, node) => {
+    bookmarkTreeNodeSetOpen(node, event.newState === "open");
+  };
+
   const renderNode = (node: chrome.bookmarks.BookmarkTreeNode) => {
     if (node.children?.length > 0) {
       return (
-        <details open={false}>
+        <details
+          open={bookmarkTreeNodeIsOpen(node)}
+          onToggle={(e) => handleNodeToggle(e, node)}
+        >
           <summary>
             {renderNodeIcon(node)}
 
