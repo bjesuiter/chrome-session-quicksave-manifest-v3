@@ -2,11 +2,13 @@ import {
   bookmarkTreeNodeIsOpen,
   bookmarkTreeNodeSetOpen,
   isNodeSessionsFolder,
+  setSessionsFolderId,
 } from "@src/lib/main/options-service";
 import { createMemo, For, Match, Show, Switch } from "solid-js";
 import BookmarkIcon from "~icons/material-symbols-light/bookmark-outline?width=24px&height=24px";
 import FolderEmptyIcon from "~icons/material-symbols-light/folder-outline-rounded?width=24px&height=24px";
 import FolderFullIcon from "~icons/material-symbols-light/folder-rounded?width=24px&height=24px";
+import StarIconHollow from "~icons/material-symbols-light/kid-star-outline?width=24px&height=24px";
 import StarIcon from "~icons/material-symbols-light/kid-star?width=24px&height=24px";
 
 export function BookmarkTree(props: {
@@ -48,7 +50,7 @@ export function BookmarkTree(props: {
           <summary>
             <span
               classList={{
-                "border-b-0 border-solid border-yellow-400 pb-1 pr-1 m-1":
+                "border-b-0 border-solid border-yellow-400 pb-1 pr-1 m-1 ml-0":
                   isNodeSessionsFolder(node.id),
               }}
             >
@@ -57,7 +59,17 @@ export function BookmarkTree(props: {
               {node.title.length > 0 ? node.title : "Bookmarks"}
 
               <Show when={isNodeSessionsFolder(node.id)}>
-                <StarIcon class="mx-1 mb-[3px] inline text-lg text-yellow-400 drop-shadow-md" />
+                <StarIcon class="mx-1 mb-[3px] inline text-lg text-yellow-400" />
+              </Show>
+              <Show when={!isNodeSessionsFolder(node.id)}>
+                <StarIconHollow
+                  class="mx-1 mb-[3px] inline text-lg text-slate-400"
+                  onClick={(click) => {
+                    click.preventDefault();
+                    click.stopPropagation();
+                    setSessionsFolderId(node.id);
+                  }}
+                />
               </Show>
             </span>
           </summary>

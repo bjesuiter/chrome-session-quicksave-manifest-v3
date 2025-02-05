@@ -97,3 +97,5 @@ export function setSessionsFolderId(folderId: string) {
 export function isNodeSessionsFolder(folderId: string) {
   return folderId === optionsStore.sessionsFolderId;
 }
+
+// export function getPathTo

@@ -25,7 +25,10 @@ export function OptionsPage() {
           <h2 class="text-xl font-semibold">Session Folder</h2>
           <p>Select the folder to store your sessions</p>
 
-          <div class="my-2 text-lg">
+          <div class="my-2 text-base">
+            <p class="my-4">
+              <i>Current session folder marked with a golden star</i>
+            </p>
             <BookmarkTree tree={bookmarkTree} />
           </div>
 
