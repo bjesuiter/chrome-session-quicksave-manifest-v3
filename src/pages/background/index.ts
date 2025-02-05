@@ -1,4 +1,3 @@
-import { showError } from "@src/lib/chrome-services/notification-service";
 import {
   clearMessageById,
   showErrorMessage,
@@ -41,7 +40,7 @@ chrome.runtime.onInstalled.addListener(async function () {
     console.log("Extension Installed Successfully!");
   } catch (error) {
     const errorMessage = `Error while creating Extension Options Storage! Please contact the developer about it!`;
-    showError("Installation Error", errorMessage);
+    showErrorMessage({ title: "Installation Error", message: errorMessage });
     console.error(errorMessage, error);
   }
 });

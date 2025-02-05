@@ -47,7 +47,7 @@ const manifest = defineManifest(async () => ({
       matches: ["*://*/*"],
     },
   ],
-  permissions: ["bookmarks", "notifications", "storage", "tabs", "windows"],
+  permissions: ["bookmarks", "storage", "tabs", "windows"],
   content_security_policy: {
     // default csp: script-src 'self'; object-src 'self';
     // extension_pages: "script-src 'self' 'unsafe-eval'; object-src 'self'",
