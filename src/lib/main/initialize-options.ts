@@ -3,78 +3,11 @@ import {
   getBookmarkFolderByName,
 } from "@src/lib/chrome-services/bookmark-service";
 import {
-  readOptions,
-  saveOptions,
-} from "@src/lib/chrome-services/synced-storage-service";
-import { SessionQuicksaveOptions } from "@src/lib/main/session-quicksave-options";
-import {
   BOOKMARK_BAR_FOLDER_ID,
   createBookmarkFolder,
 } from "../chrome-services/bookmark-service";
-import { isSessionFolderValid } from "../utils/is-session-folder-valid";
 
 export const DEFAULT_SESSIONS_FOLDER_NAME = "Sessions";
-
-/**
- * Creates the neccessary options for this extension in chrome synced storage
- */
-export async function initializeOptions() {
-  console.log("Initializing Option Storage for Session Quicksave Extension.");
-  console.log(
-    "Checking if options are already available in chrome.storage.sync ...",
-  );
-
-  try {
-    const options = await readOptions();
-    if (options) {
-      console.log("Found options in chrome.storage.sync: ", options);
-    }
-
-    console.log(
-      `Validating options.sessionsFolderId: ${options.sessionsFolderId}...`,
-    );
-    if (isSessionFolderValid(options.sessionsFolderId)) {
-      console.log("Session Folder Id is valid.", {
-        sessionsFolderId: options.sessionsFolderId,
-      });
-      return;
-    }
-  } catch (error) {
-    console.error("Chrome reading error while reading options: ", error);
-  }
-
-  // Path for no or invalid options found
-  console.log("Found no or invalid options, initializing new ones...");
-  console.log(
-    `Make sure that a Folder 'Sessions' exists in bookmark tree id 1 (which is likely the folder for BookmarkBar) ...`,
-  );
-
-  const sessionFolderNode = await ensureDefaultSessionFolderAvailability();
-
-  if (!sessionFolderNode) {
-    throw new Error(
-      `Critical Error: Creation of default sessions folder failed!`,
-    );
-  }
-
-  console.log(
-    `The ID of the Folder Named ${sessionFolderNode.title} is: `,
-    sessionFolderNode.id,
-  );
-  console.log(`Creating new Options object...`);
-  const options = {
-    sessionsFolderId: sessionFolderNode.id,
-  } satisfies SessionQuicksaveOptions;
-
-  try {
-    const optionsSaved = await saveOptions(options);
-    console.log("New Options successfully saved!", optionsSaved);
-    console.log("New options:", options);
-  } catch (error) {
-    error.message = `[initializeOptions]: Critical Error while saving options:  ${error.message}`;
-    throw error;
-  }
-}
 
 /**
  * @returns Session Folder Node
