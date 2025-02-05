@@ -12,7 +12,10 @@ export const ChromeSyncStorageAdapterForSolidStore = {
       );
       throw chrome.runtime.lastError;
     }
-    return syncItems[key];
+    // if syncItems[key] is undefined, return an empty object so that the deserialize function is called higher up in the store
+    // otherwise i can't check if i read the values from the first start of the extension or only nothing because the store was not initialized properly.
+    // see options-service.ts for details
+    return syncItems[key] ?? {};
   },
   setItem: async (key: string, value: string): Promise<unknown> => {
     console.debug(

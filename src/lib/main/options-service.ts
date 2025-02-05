@@ -13,6 +13,22 @@ export const [optionsLoadingError, setOptionsLoadingError] = createSignal<
   string | undefined
 >(undefined);
 
+/**
+ * States of this store
+ *
+ * - when loading the chrome Extensions:
+ *   - optionsStore contains the default values passed to createStore() function below
+ *   - sync storage is not yet loaded, indicated by the isInitialized === false prop
+ *
+ * - when sync storage contains nothing:
+ *   - optionsStore contains the default values of the SessionQuicksaveOptions schema,
+ *     in particular: isFirstStart === true, isInitialized === true
+ *     => can be used to detect the first start of the extension
+ *
+ * - when sync storage contains values:
+ *   - optionsStore contains the values from the sync storage
+ *
+ */
 export const [optionsStore, setOptionsStore, _initValues] = makePersisted(
   // eslint-disable-next-line solid/reactivity
   createStore<SessionQuicksaveOptions>({
@@ -25,7 +41,7 @@ export const [optionsStore, setOptionsStore, _initValues] = makePersisted(
     // The name of this store inside chrome.storage.sync
     name: "options",
     serialize: (value: SessionQuicksaveOptions) => JSON.stringify(value),
-    deserialize: (value: string | Record<string, unknown>) => {
+    deserialize: (value: string | Record<string, unknown> | undefined) => {
       if (typeof value === "string") {
         value = JSON.parse(value);
       }
@@ -34,9 +50,9 @@ export const [optionsStore, setOptionsStore, _initValues] = makePersisted(
         console.error({
           message: `Could not parse options from chrome.storage.sync: ${parsed.error.message}`,
         });
-        // setOptionsLoadingError(
-        //   `Could not parse options from chrome.storage.sync: ${parsed.error.message}`,
-        // );
+        setOptionsLoadingError(
+          `Could not parse options from chrome.storage.sync: ${parsed.error.message}`,
+        );
         // throw new Error(
         //   `Could not parse options from chrome.storage.sync: ${parsed.error.message}`,
         // );
