@@ -1,5 +1,6 @@
 import { showError } from "@src/lib/chrome-services/notification-service";
 import {
+  clearMessageById,
   showErrorMessage,
   showSuccessMessage,
   showWarningMessage,
@@ -56,6 +57,9 @@ createEffect(() => {
     return;
   }
 
+  // if (optionsStore.isFirstStart) {
+  // }
+
   console.debug("Options are initialized with: ", unwrap(optionsStore));
 
   // check option loading errors
@@ -73,6 +77,7 @@ createEffect(() => {
   isSessionFolderValid(sessionsFolderId).then((isValid) => {
     if (isValid) {
       console.debug(`Session Folder Id "${sessionsFolderId}" is valid.`);
+      clearMessageById("invalid-session-folder");
     } else {
       showWarningMessage({
         message: `Your selected session folder is invalid. Click here to select one...`,
