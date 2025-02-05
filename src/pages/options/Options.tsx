@@ -1,4 +1,5 @@
 import { isDev } from "@src/lib/flags";
+import { userMessages } from "@src/lib/main/messages-service";
 import { optionsStore } from "@src/lib/main/options-service";
 import "@src/styles/tailwind.css";
 import { createMemo, createResource, Show } from "solid-js";
@@ -35,6 +36,12 @@ export function OptionsPage() {
     return nodeIDs;
   });
 
+  const invalidSessionFolderMessage = createMemo(() => {
+    return userMessages.find(
+      (message) => message.id === "invalid-session-folder",
+    );
+  });
+
   return (
     <div class="fixed inset-0 bg-slate-100 text-slate-800">
       {/* x-centered box */}
@@ -50,6 +57,24 @@ export function OptionsPage() {
 
         {/* Content Section */}
         <section class="min-h-[150px] overflow-y-auto p-5">
+          {/* Render message here when message id invalid-session-folder exists */}
+          <Show when={invalidSessionFolderMessage()}>
+            {(_props) => (
+              <div class="mb-4 mt-2 flex cursor-pointer items-center space-x-2 rounded border-2 border-solid border-yellow-500 p-2">
+                <div class="size-3 rounded-full bg-yellow-500" />
+                <div>
+                  <p class="text-base font-bold">
+                    You're selected session folder is invalid.
+                  </p>
+                  <span class="font-semibold">
+                    Please select a folder below by clicking on the hollow star
+                    besides the name.
+                  </span>
+                </div>
+              </div>
+            )}
+          </Show>
+
           <h2 class="text-xl font-semibold">Session Folder</h2>
           <p>Select the folder to store your sessions</p>
 
