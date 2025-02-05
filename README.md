@@ -8,6 +8,13 @@ see https://developer.chrome.com/webstore/publish
 
 or https://developer.chrome.com/docs/webstore/update#upgrade-your-item
 
+### Quick Guide
+
+1. Update the version in package.json to the one you want to submit
+2. Run `bun prod` to build a production version of the extension
+3. Make a zip of the contents of the ./dist folder
+4. Upload that zip as a new version to https://chrome.google.com/webstore/devconsole/15df77ae-6e3a-4397-b214-e6ae835615e0/fnkohghmlhjonhifnakaejendkgfkbeg/edit/package
+
 ## Icon Attributions
 
 This project uses Icons from this icon pack:  
