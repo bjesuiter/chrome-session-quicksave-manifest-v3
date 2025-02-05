@@ -5,7 +5,7 @@ import {
   setSessionsFolderId,
 } from "@src/lib/main/options-service";
 import { createMemo, For, Match, Show, Switch } from "solid-js";
-import BookmarkIcon from "~icons/material-symbols-light/bookmark-outline?width=24px&height=24px";
+import BookmarkIcon from "~icons/material-symbols-light/bookmark?width=24px&height=24px";
 import FolderEmptyIcon from "~icons/material-symbols-light/folder-outline-rounded?width=24px&height=24px";
 import FolderFullIcon from "~icons/material-symbols-light/folder-rounded?width=24px&height=24px";
 import StarIconHollow from "~icons/material-symbols-light/kid-star-outline?width=24px&height=24px";
@@ -25,13 +25,13 @@ export function BookmarkTree(props: {
     return (
       <Switch>
         <Match when={node.url === undefined && node.children?.length === 0}>
-          <FolderEmptyIcon class="mb-[3px] inline" />
+          <FolderEmptyIcon class="mb-[3px] inline text-slate-600" />
         </Match>
         <Match when={node.url === undefined && node.children?.length > 0}>
-          <FolderFullIcon class="mb-[3px] inline" />
+          <FolderFullIcon class="mb-[3px] inline text-slate-600" />
         </Match>
         <Match when={node.url !== undefined}>
-          <BookmarkIcon class="mb-[3px] inline" />
+          <BookmarkIcon class="mb-[3px] inline text-slate-600" />
         </Match>
       </Switch>
     );
