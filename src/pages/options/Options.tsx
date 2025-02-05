@@ -11,7 +11,9 @@ export function OptionsPage() {
 
   return (
     <div class="fixed inset-0 bg-slate-100 text-slate-800">
-      <div class="mx-auto my-10 min-w-[300px] max-w-[900px] overflow-hidden rounded border-2 border-slate-200">
+      {/* x-centered box */}
+      <div class="mx-auto my-10 flex h-[90dvh] min-w-[300px] max-w-[900px] flex-col overflow-hidden rounded border-2 border-slate-200">
+        {/* Header section */}
         <header class="flex flex-row items-center gap-4 bg-slate-800 p-5 text-white">
           <img
             class="size-12"
