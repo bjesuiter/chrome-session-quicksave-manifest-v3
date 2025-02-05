@@ -92,6 +92,19 @@ export function BookmarkTree(props: {
         >
           {renderNodeIcon(node)}
           {node.title}
+          <Show when={isNodeSessionsFolder(node.id)}>
+            <StarIcon class="mx-1 mb-[3px] inline text-lg text-yellow-400" />
+          </Show>
+          <Show when={!isNodeSessionsFolder(node.id)}>
+            <StarIconHollow
+              class="mx-1 mb-[3px] inline text-lg text-slate-400"
+              onClick={(click) => {
+                click.preventDefault();
+                click.stopPropagation();
+                setSessionsFolderId(node.id);
+              }}
+            />
+          </Show>
         </p>
       );
     }
