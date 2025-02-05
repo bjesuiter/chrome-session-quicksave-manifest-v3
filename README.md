@@ -6,6 +6,8 @@ A Chrome extension for quickly saving all open tabs inside a window into the bro
 
 see https://developer.chrome.com/webstore/publish
 
+or https://developer.chrome.com/docs/webstore/update#upgrade-your-item
+
 ## Icon Attributions
 
 This project uses Icons from this icon pack:  
