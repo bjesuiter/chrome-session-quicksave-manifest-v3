@@ -1,7 +1,7 @@
 import { saveSession } from "@src/lib/chrome-services/bookmark-service";
-import { readOptionSessionsFolderId } from "@src/lib/chrome-services/synced-storage-service";
 import { getTabsInWindow } from "@src/lib/chrome-services/tabs-service";
 import { hasModalMessage } from "@src/lib/main/messages-service";
+import { optionsStore } from "@src/lib/main/options-service";
 import "@src/styles/tailwind.css";
 import { format } from "date-fns";
 import { createSignal, Show } from "solid-js";
@@ -50,7 +50,7 @@ export function PopupPage() {
     const currentWindow = await chrome.windows.getCurrent();
     // this uses the first result, may break easily!
     // replace with target folder selection via plugin later
-    const sessionFolderId = await readOptionSessionsFolderId();
+    const sessionFolderId = optionsStore.sessionsFolderId;
     const tabs: chrome.tabs.Tab[] = await getTabsInWindow(currentWindow.id);
 
     try {
