@@ -16,6 +16,7 @@
   "scripts": {
     "dev": "vite build -w --mode development",
     "build": "vite build",
+    "prod": "vite build",
     "lint": "eslint --fix",
     "dev:nodemon": "nodemon",
     "build:noemit": "tsc --noEmit && vite build",
