@@ -1,4 +1,5 @@
 import { crx } from "@crxjs/vite-plugin";
+import tailwindcss from "@tailwindcss/vite";
 import { resolve } from "path";
 import Icons from "unplugin-icons/vite";
 import solidPlugin from "vite-plugin-solid";
@@ -21,6 +22,7 @@ export default defineConfig(({ mode }) => {
 
   return {
     plugins: [
+      tailwindcss(),
       solidPlugin(),
       // Setup Instructions for unplugin-icons: https://github.com/unplugin/unplugin-icons
       Icons({ compiler: "solid" }),
