@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "noEmit": true,
+    "isolatedModules": true,
     "baseUrl": ".",
     "allowJs": false,
     "target": "esnext",
